@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">My Cool Sports App</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_notifications">Notifications</string>
 
     <string name="menu_home">Αγώνες</string>
     <string name="menu_data">Διαχείρηση Δεδομένων</string>
