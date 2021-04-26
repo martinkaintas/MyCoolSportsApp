@@ -16,4 +16,10 @@
         android:name="com.tripple_d.mycoolsportsapp.ui.data.DataFragment"
         android:label="@string/menu_data"
         tools:layout="@layout/fragment_data" />
+
+    <fragment
+        android:id="@+id/nav_matches"
+        android:name="com.tripple_d.mycoolsportsapp.ui.match_details.ParticipantFragment"
+        android:label="PAPAPA"
+        tools:layout="@layout/fragment_match_details" />
 </navigation>

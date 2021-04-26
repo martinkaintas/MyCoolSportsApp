@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="matchDetails__title" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+    </style>
+
+    <style name="matchDetails__text" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">19dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="matchDetails__participation" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+
+    <style name="wrapper" parent="TextAppearance.AppCompat">
+        <item name="android:padding">16dp</item>
+    </style>
+
+
+</resources>
