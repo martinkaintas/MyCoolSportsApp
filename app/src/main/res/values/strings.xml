@@ -7,10 +7,24 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_notifications">Notifications</string>
     <string name="menu_home">Αγώνες</string>
-    <string name="menu_data">Διαχείρηση Δεδομένων</string>
     <string name="home__match_icon_desc">match Icon</string>
     <string name="home__match_date">17/2</string>
     <string name="home__match_time">17:00</string>
     <string name="home__match_default_text">Match X</string>
 
+
+    <!--Match Details-->
+    <string name="matchDetails__title">Λεπτομέρειες Αγώνα</string>
+    <string name="matchDetails__sport">Αγώνισμα</string>
+    <string name="matchDetails__result">Αποτέλεσμα</string>
+    <string name="matchDetails__date">Ημερομηνία</string>
+    <string name="matchDetails__place">Τοποθεσία</string>
+    <string name="matchDetails__show">Προβολή</string>
+    <string name="matchDetails__participation">Συμμετοχή</string>
+    <string name="matchDetails__point">0</string>
+
+    <!--TODO: Kappa-->
+    <string name="menu_data">Διαχείριση Δεδομένων</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

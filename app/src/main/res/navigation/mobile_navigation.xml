@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_data"
+        android:id="@+id/nav_data_F"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.DataFragment"
         android:label="@string/menu_data"
         tools:layout="@layout/fragment_data" />

@@ -7,5 +7,5 @@ data class Match (
     var city: String,
     var country: String,
     var sport: Sport,
-    var participants: List<Participants>
+    var participants: List<Participant>
 )
