@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.ui.data.DataParticipant
+import com.tripple_d.mycoolsportsapp.models.Match
+import com.tripple_d.mycoolsportsapp.models.Participant
 
-class ParticipantFragment:Fragment() {
+class ParticipantFragment(val participants: List<Participant>):Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,14 +18,8 @@ class ParticipantFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_match_details, container, false)
-
-        var participantList = mutableListOf(
-            DataParticipant("Makis Makou",10),
-            DataParticipant("Nikos Nikas",9),
-            DataParticipant("Dimitris Plikos",69)
-        )
         val recyclerView = root.findViewById<RecyclerView>(R.id.rvParticipant)
-        recyclerView.apply { adapter=ParticipantAdapter(participantList) }
+        recyclerView.apply { adapter=ParticipantAdapter(participants) }
         return root
     }
 }

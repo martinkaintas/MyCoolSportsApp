@@ -7,7 +7,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_notifications">Notifications</string>
     <string name="menu_home">Αγώνες</string>
-    <string name="menu_data">Διαχείρηση Δεδομένων</string>
     <string name="home__match_icon_desc">match Icon</string>
     <string name="home__match_date">17/2</string>
     <string name="home__match_time">17:00</string>

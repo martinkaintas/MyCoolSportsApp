@@ -12,17 +12,22 @@ import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match
 
 
-class MatchAdapter(private val dataSet: MutableList<Match>):
-    RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
+class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClickListener: IItemClickListener):
+                RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
     class MatchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(match: Match, clickListener: IItemClickListener)
+        {
+            itemView.setOnClickListener {
+                clickListener.onItemClicked(match)
+            }
+        }
     }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MatchViewHolder {
         // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.match_card_item, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.match_card_item, viewGroup, false)
 
         return MatchViewHolder(view)
     }
@@ -38,8 +43,8 @@ class MatchAdapter(private val dataSet: MutableList<Match>):
         var maxScore: Int = 0
         var winnerIdx: Int = 0
         var idx: Int = 0
-        for (participant in dataSet[position].participants){
-            if (participant.score > maxScore){
+        for (participant in dataSet[position].participants) {
+            if (participant.score > maxScore) {
                 maxScore = participant.score
                 winnerIdx = idx
             }
@@ -51,6 +56,7 @@ class MatchAdapter(private val dataSet: MutableList<Match>):
         holder.itemView.findViewById<TextView>(R.id.match_date).text = dataSet[position].date.dayOfMonth.toString() + "/" + dataSet[position].date.monthValue.toString()
         holder.itemView.findViewById<TextView>(R.id.match_time).text = dataSet[position].date.hour.toString() + ":" + dataSet[position].date.minute.toString()
 
+        holder.bind(dataSet[position],itemClickListener)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

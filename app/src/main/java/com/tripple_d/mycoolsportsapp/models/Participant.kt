@@ -1,6 +1,6 @@
 package com.tripple_d.mycoolsportsapp.models
 
-data class Participants(
+data class Participant(
     var name: String,
     var score: Int
 )
