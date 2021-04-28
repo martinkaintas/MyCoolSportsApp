@@ -30,13 +30,13 @@
 
     <ImageView
         android:id="@+id/ivMatchSport"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:contentDescription="@string/matchDetails__sport"
         app:layout_constraintBottom_toBottomOf="@+id/tvMatchSport"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvMatchSport"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+        app:srcCompat="@drawable/ic_baseline_sports_basketball_24_cyan" />
 
     <TextView
         android:id="@+id/tvMatchSportTitle"
@@ -79,13 +79,13 @@
 
     <ImageView
         android:id="@+id/ivMatchDetailsPlaceIcon"
-        android:layout_width="13dp"
-        android:layout_height="14dp"
+        android:layout_width="24dp"
+        android:layout_height="22dp"
         android:contentDescription="@string/matchDetails__date"
         app:layout_constraintBottom_toBottomOf="@+id/tvMatchDetailsPlace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvMatchDetailsPlace"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+        app:srcCompat="@drawable/ic_baseline_location_city_24_cyan" />
 
     <TextView
         android:id="@+id/tvMatchDetailsPlace"
