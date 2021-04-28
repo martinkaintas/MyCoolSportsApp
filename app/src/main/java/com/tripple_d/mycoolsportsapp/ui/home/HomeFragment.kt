@@ -17,6 +17,7 @@ import com.tripple_d.mycoolsportsapp.models.Participant
 import com.tripple_d.mycoolsportsapp.models.Sport
 import com.tripple_d.mycoolsportsapp.ui.match_details.MatchDetailsFragment
 import java.time.LocalDateTime
+import java.time.Month
 
 class HomeFragment : Fragment(),IItemClickListener {
 
@@ -37,14 +38,24 @@ class HomeFragment : Fragment(),IItemClickListener {
         // Dummy Data
         var nba: Sport = Sport("NBA", true)
         var miamiHeat: Participant = Participant("Miami Heat", 120)
-        var memphisGrizzlies: Participant = Participant("Memphis Grizzlies", 112)
+        var memphisGrizzlies: Participant = Participant("Memphis Grizzlies", 132)
         var participants: MutableList<Participant> = mutableListOf<Participant>()
         participants.add(memphisGrizzlies)
         participants.add(miamiHeat)
         var match1: Match = Match(LocalDateTime.now(), "Miami", "USA", nba, participants)
 
+        var ski: Sport = Sport("Ski", false)
+        var player1: Participant = Participant("Nikos", 65)
+        var player2: Participant = Participant("Giannakis", 57)
+        var player3: Participant = Participant("Takis", 69)
+        var participants2: MutableList<Participant> = mutableListOf<Participant>()
+        participants2.add(player1)
+        participants2.add(player2)
+        participants2.add(player3)
+        var match2: Match = Match(LocalDateTime.of(2017, Month.FEBRUARY,3,6,30),"LA","USA", nba, participants2)
+
         matches.add(match1)
-        matches.add(match1)
+        matches.add(match2)
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.matches_recycler)
         val matchAdapter = MatchAdapter(matches,this)
