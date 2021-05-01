@@ -23,6 +23,8 @@
     <string name="matchDetails__participation">Συμμετοχή</string>
     <string name="matchDetails__point">0</string>
 
+    <string name="fab_add">Προσθήκη</string>
+
     <!--TODO: Kappa-->
     <string name="menu_data">Διαχείριση Δεδομένων</string>
     <!-- TODO: Remove or change this placeholder text -->

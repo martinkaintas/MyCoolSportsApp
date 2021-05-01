@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
 
-class DataListAdapter (
+class AthleteListAdapter(
     private val dataList: MutableList<String>
-): RecyclerView.Adapter<DataListAdapter.DataListViewHolder>() {
+) : RecyclerView.Adapter<AthleteListAdapter.DataListViewHolder>() {
 
     class DataListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
