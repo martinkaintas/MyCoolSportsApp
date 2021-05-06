@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "188330679924",
+    "project_id": "mycoolsportsapp-45706",
+    "storage_bucket": "mycoolsportsapp-45706.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188330679924:android:0e876ae6a8dc99468a3b21",
+        "android_client_info": {
+          "package_name": "com.tripple_d.mycoolsportsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188330679924-i04c066qo1ahtcu8bhcnftp0h3lp94ie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tripple_d.mycoolsportsapp",
+            "certificate_hash": "7d1a7958e546aa458eadc5e256f4170fad15b93d"
+          }
+        },
+        {
+          "client_id": "188330679924-osk9ja9tqjhpop111oqch321gfpp70vb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVqQ-pHECR7lOZ5oT_dxVYFWieH85L-5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188330679924-osk9ja9tqjhpop111oqch321gfpp70vb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
