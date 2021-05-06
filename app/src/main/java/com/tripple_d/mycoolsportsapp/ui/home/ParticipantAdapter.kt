@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Participant
+import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
 
-class ParticipantAdapter(private val dataSet: List<Participant>):
+class ParticipantAdapter(private val dataSet: List<Participation>):
         RecyclerView.Adapter<ParticipantAdapter.ParticipantViewHolder>() {
 
     class ParticipantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,8 +29,7 @@ class ParticipantAdapter(private val dataSet: List<Participant>):
     // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
-
-        holder.itemView.findViewById<TextView>(R.id.participant).text=dataSet[position].name
+        holder.itemView.findViewById<TextView>(R.id.participant).text=dataSet[position].competitor.name
         if (dataSet[position].score >= 0){
             holder.itemView.findViewById<TextView>(R.id.score).text= dataSet[position].score.toString()
         }else{
