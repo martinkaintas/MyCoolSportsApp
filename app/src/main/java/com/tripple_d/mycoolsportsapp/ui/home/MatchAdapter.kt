@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
-import com.tripple_d.mycoolsportsapp.models.Participant
+import com.tripple_d.mycoolsportsapp.models.Match.Match
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClickListener: IItemClickListener):
@@ -27,6 +28,7 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
         }
     }
 
+
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MatchViewHolder {
         // Create a new view, which defines the UI of the list item
@@ -38,18 +40,17 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
     // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
-
-        var participantsSorted : List<Participant> = dataSet[position].participants.sortedWith(compareByDescending { it.score })
+        var participantsSorted : List<Participation> = dataSet[position].participations.sortedWith(compareByDescending { it.score })
         var childRecyclerViewAdapter: ParticipantAdapter
         if (participantsSorted.size > 2){
-            var firstParticipantsSorted = participantsSorted.map { it.copy() }.subList(0,2)
-            firstParticipantsSorted[1].name = "... and " + (participantsSorted.size - 1) +" more."
+            var firstParticipantsSorted = participantsSorted.subList(0,2)
+            firstParticipantsSorted[1].competitor.name  = "... and " + (participantsSorted.size - 1) +" more."
             firstParticipantsSorted[1].score = -1
             childRecyclerViewAdapter = ParticipantAdapter(firstParticipantsSorted)
         }else{
             childRecyclerViewAdapter = ParticipantAdapter(participantsSorted)
         }
-        holder.participantRV.setAdapter(childRecyclerViewAdapter)
+        holder.participantRV.setAdapter(ParticipantAdapter(participantsSorted))
 
         var dateFormatter = DateTimeFormatter.ofPattern("dd/MM")
         var timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -70,4 +71,6 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+
 }

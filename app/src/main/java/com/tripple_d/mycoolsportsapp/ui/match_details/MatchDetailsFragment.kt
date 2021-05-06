@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
+import com.tripple_d.mycoolsportsapp.models.Match.Match
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -25,11 +25,11 @@ class MatchDetailsFragment(val match: Match): Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_match_details, container, false)
         root.findViewById<TextView>(R.id.tvMatchSport).text = match.sport.name
-        root.findViewById<TextView>(R.id.tvMatchDetailsPlace).text = match.city + ", " + match.country
+        root.findViewById<TextView>(R.id.tvMatchDetailsPlace).text = match.city.name + ", " + match.city.country
         root.findViewById<TextView>(R.id.tvMatchDetailsDate).text = formatDate(match.date)
 
 
-        val sortedParticipants = match.participants.sortedWith(compareByDescending({ it.score })) //sort
+        val sortedParticipants = match.participations.sortedWith(compareByDescending({ it.score })) //sort
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.rvParticipant)
         val participantAdapter = ParticipantAdapter(sortedParticipants)

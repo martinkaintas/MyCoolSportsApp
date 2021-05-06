@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
-import com.tripple_d.mycoolsportsapp.models.Participant
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
 
-class ParticipantFragment(val participants: List<Participant>):Fragment() {
+class ParticipantFragment(val participants: List<Participation>):Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

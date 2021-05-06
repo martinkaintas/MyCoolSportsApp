@@ -8,12 +8,11 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView;
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
-import com.tripple_d.mycoolsportsapp.models.Participant
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
 
 
 class ParticipantAdapter (
-    var dataParticipants:List<Participant>
+    var dataParticipants:List<Participation>
 )  :RecyclerView.Adapter<ParticipantAdapter.ParticipantViewHolder>()  {
 
     inner class ParticipantViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
@@ -24,7 +23,7 @@ class ParticipantAdapter (
     }
 
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.tvParticipant).text=dataParticipants[position].name
+        holder.itemView.findViewById<TextView>(R.id.tvParticipant).text=dataParticipants[position].competitor.name
         holder.itemView.findViewById<TextView>(R.id.tvParticipantPoints).text= dataParticipants[position].score.toString()
         if(position==0) {
             holder.itemView.findViewById<TextView>(R.id.tvParticipant).setTypeface(null, Typeface.BOLD); //should make the winner Bold
