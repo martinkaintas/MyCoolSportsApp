@@ -45,7 +45,6 @@ class HomeFragment : Fragment(),IItemClickListener {
                     val sport = mainActivity.room_db.sportDao().get(match.data["sport_id"] as Long)
                     val participations : MutableList<Participation> = mutableListOf<Participation>()
                     val city = mainActivity.room_db.cityDao().get(match.data["city"] as Long)
-
                     for (participation in match.get("participants") as ArrayList<HashMap<String,String>>){
                         val competitor: Competitor
                         //Todo: find a better way in order to improve performance (sorry, burnout)
@@ -61,7 +60,7 @@ class HomeFragment : Fragment(),IItemClickListener {
                         Match(
                             match.getLong("id"),
                             LocalDateTime.ofInstant(
-                                Instant.ofEpochMilli((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
+                                Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
                                 TimeZone.getDefault().toZoneId()),
                             city,
                             sport,

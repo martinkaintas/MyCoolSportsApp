@@ -29,7 +29,7 @@ class ParticipantAdapter(private val dataSet: List<Participation>):
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
         if(position >= 2){ return }
-        else if( itemCount >= 2 && position == 1 ){
+        else if( itemCount > 2 && position == 1 ){
             holder.itemView.findViewById<TextView>(R.id.participant).text= "... and " + (itemCount - 1) + " more."
             holder.itemView.findViewById<TextView>(R.id.score).text= ""
         }else {
