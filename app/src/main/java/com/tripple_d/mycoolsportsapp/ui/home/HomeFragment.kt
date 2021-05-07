@@ -5,63 +5,95 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
-import com.tripple_d.mycoolsportsapp.models.Participant
-import com.tripple_d.mycoolsportsapp.models.Sport
+import com.tripple_d.mycoolsportsapp.models.AthleteDAO.AthleteDao
+import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
+import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
+import com.tripple_d.mycoolsportsapp.models.Competitor.Team.TeamDao
+import com.tripple_d.mycoolsportsapp.models.Match.Match
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
+import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
 import com.tripple_d.mycoolsportsapp.ui.match_details.MatchDetailsFragment
+import java.time.Instant
 import java.time.LocalDateTime
-import java.time.Month
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class HomeFragment : Fragment(),IItemClickListener {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mainActivity: NavDrawer
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun fetchMatches(recyclerView:RecyclerView) {
+        val matches: MutableList<Match> = mutableListOf<Match>()
+
+        mainActivity.firebase_db.collection("Matches")
+            .get()
+            .addOnSuccessListener { result ->
+                for (match in result) {
+                    val sport = mainActivity.room_db.sportDao().get(match.data["sport_id"] as Long)
+                    val participations : MutableList<Participation> = mutableListOf<Participation>()
+                    val city = mainActivity.room_db.cityDao().get(match.data["city"] as Long)
+
+                    for (participation in match.get("participants") as ArrayList<HashMap<String,String>>){
+                        val competitor: Competitor
+                        //Todo: find a better way in order to improve performance (sorry, burnout)
+                        competitor = if(sport.type=="group")
+                            mainActivity.room_db.teamDao().get(participation["id"] as Long)
+                        else
+                            mainActivity.room_db.athleteDao().get(participation["id"] as Long)
+
+                        participations.add(Participation(participation["score"] as Long, competitor))
+                    }
+
+                    matches.add(
+                        Match(
+                            match.getLong("id"),
+                            LocalDateTime.ofInstant(
+                                Instant.ofEpochMilli((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
+                                TimeZone.getDefault().toZoneId()),
+                            city,
+                            sport,
+                            participations
+                        )
+                    )
+
+                }
+
+                val matchAdapter = MatchAdapter(matches, this)
+                recyclerView.apply {
+                    adapter = matchAdapter
+                }
+                matchAdapter.notifyDataSetChanged()
+            }
+
+
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-
-        var matches: MutableList<Match> = mutableListOf<Match>()
-
-        // Dummy Data
-        var nba: Sport = Sport("NBA", true)
-        var miamiHeat: Participant = Participant("Miami Heat", 120)
-        var memphisGrizzlies: Participant = Participant("Memphis Grizzlies", 132)
-        var participants: MutableList<Participant> = mutableListOf<Participant>()
-        participants.add(memphisGrizzlies)
-        participants.add(miamiHeat)
-        var match1: Match = Match(LocalDateTime.now(), "Miami", "USA", nba, participants)
-
-        var ski: Sport = Sport("Ski", false)
-        var player1: Participant = Participant("Nikos", 65)
-        var player2: Participant = Participant("Giannakis", 57)
-        var player3: Participant = Participant("Takis", 69)
-        var participants2: MutableList<Participant> = mutableListOf<Participant>()
-        participants2.add(player1)
-        participants2.add(player2)
-        participants2.add(player3)
-        var match2: Match = Match(LocalDateTime.of(2017, Month.FEBRUARY,3,6,30),"LA","USA", nba, participants2)
-
-        matches.add(match1)
-        matches.add(match2)
+        mainActivity = activity as NavDrawer
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.matches_recycler)
-        val matchAdapter = MatchAdapter(matches,this)
-        recyclerView.apply {
-            adapter = matchAdapter
-        }
+        fetchMatches(recyclerView)
 
         return root
     }
@@ -71,10 +103,9 @@ class HomeFragment : Fragment(),IItemClickListener {
         showMatchDetailsFragment(fr)
     }
 
-    private fun showMatchDetailsFragment(fr:Fragment) {
+    private fun showMatchDetailsFragment(fr: Fragment) {
         val fragmentManager: FragmentManager = parentFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        println(R.id.matches_recycler)
         fragmentTransaction.replace(R.id.nav_host_fragment, fr)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commitAllowingStateLoss()
