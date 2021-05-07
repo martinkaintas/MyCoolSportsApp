@@ -41,7 +41,7 @@ class NavDrawer : AppCompatActivity() {
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
                 City(0,"Thessaloniki", "Greece",69.0,69.0,),
-                City(1,"El Basan", "Yes",99.0,99.0,),
+                City(0,"El Basan", "Yes",99.0,99.0,),
             )
         }
 

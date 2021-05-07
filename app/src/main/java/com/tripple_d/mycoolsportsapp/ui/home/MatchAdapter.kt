@@ -41,16 +41,8 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         var participantsSorted : List<Participation> = dataSet[position].participations.sortedWith(compareByDescending { it.score })
-        var childRecyclerViewAdapter: ParticipantAdapter
-        if (participantsSorted.size > 2){
-            var firstParticipantsSorted = participantsSorted.subList(0,2)
-            firstParticipantsSorted[1].competitor.name  = "... and " + (participantsSorted.size - 1) +" more."
-            firstParticipantsSorted[1].score = -1
-            childRecyclerViewAdapter = ParticipantAdapter(firstParticipantsSorted)
-        }else{
-            childRecyclerViewAdapter = ParticipantAdapter(participantsSorted)
-        }
-        holder.participantRV.setAdapter(ParticipantAdapter(participantsSorted))
+        var childRecyclerViewAdapter = ParticipantAdapter(participantsSorted)
+        holder.participantRV.setAdapter(childRecyclerViewAdapter)
 
         var dateFormatter = DateTimeFormatter.ofPattern("dd/MM")
         var timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
