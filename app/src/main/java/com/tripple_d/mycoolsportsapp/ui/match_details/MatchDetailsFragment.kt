@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.Match
 import com.tripple_d.mycoolsportsapp.ui.map.MapsActivity
 import java.io.IOException
 import com.tripple_d.mycoolsportsapp.models.Match.Match
@@ -49,7 +48,7 @@ class MatchDetailsFragment(val match: Match): Fragment() {
 
         var showMapBtn: Button = root.findViewById<Button>(R.id.btnMatchDetailsPlaceButton)
         showMapBtn.setOnClickListener {
-            showMap(match.city + "  " + match.country)
+            showMap(match.city.name + "  " + match.city.country)
         }
 
         return root
