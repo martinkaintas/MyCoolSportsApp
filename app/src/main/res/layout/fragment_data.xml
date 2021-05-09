@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.data.DataFragment">
+    tools:context=".ui.data.DataFragment"
+    android:id="@+id/fgData">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpData"

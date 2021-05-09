@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/wrapper">
+
+    <TextView
+        android:id="@+id/tvSportNameLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ονομα"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchSport"
+        />
+
+    <EditText
+        android:id="@+id/tvSportName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="TAKIS"
+        android:inputType="none"
+        android:text="TAKIS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportNameLabel"
+        tools:ignore="InvalidId"
+        tools:text="TAKIS" />
+
+
+    <TextView
+        android:id="@+id/tvAthleteSportLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportName"
+        tools:text="ΕΙΔΟΣ" />
+
+    <Spinner
+        android:id="@+id/tvSportType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAthleteSportLabel" />
+
+    <TextView
+        android:id="@+id/tvSportGenderLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportType"
+        tools:text="ΦΥΛΟ" />
+
+    <Spinner
+        android:id="@+id/tvSportGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
+
+    <Button
+        android:id="@+id/btEditSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportGender" />
+
+    <Button
+        android:id="@+id/btDeleteSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΔΙΑΓΡΑΦΗ"
+        app:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportGender" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

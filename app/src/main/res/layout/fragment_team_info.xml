@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/wrapper">
+
+    <TextView
+        android:id="@+id/tvTeamNameLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ονομα"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvTeamName"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamNameLabel" />
+
+    <TextView
+        android:id="@+id/tvTeamStadiumLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamName"
+        android:text="ΟΝΟΜΑ ΓΗΠΕΔΟΥ" />
+
+    <TextView
+        android:id="@+id/tvTeamStadium"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamStadiumLabel"
+        android:inputType="none"
+        tools:ignore="InvalidId" />
+
+    <TextView
+        android:id="@+id/tvTeamCityLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamStadium"
+        android:text="ΠΟΛΗ (ΕΔΡΑ)" />
+
+    <TextView
+        android:id="@+id/tvTeamCity"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamCityLabel"
+        android:inputType="none"
+        tools:ignore="InvalidId" />
+
+    <TextView
+        android:id="@+id/tvTeamCountryLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamCity"
+        android:text="ΧΩΡΑ" />
+
+    <TextView
+        android:id="@+id/tvTeamCountry"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamCountryLabel"
+        android:inputType="none"
+        tools:ignore="InvalidId" />
+
+    <TextView
+        android:id="@+id/tvTeamTypeLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamCountry"
+        android:text="ΑΘΛΗΜΑ" />
+
+    <TextView
+        android:id="@+id/tvTeamType"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamTypeLabel" />
+
+    <TextView
+        android:id="@+id/tvTeamBirthYearLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamType"
+        android:text="ΕΤΟΣ ΙΔΡΥΣΗΣ" />
+
+    <TextView
+        android:id="@+id/tvTeamBirthYear"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYearLabel" />
+
+    <Button
+        android:id="@+id/btEditTeam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYear" />
+
+    <Button
+        android:id="@+id/btDeleteTeam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΔΙΑΓΡΑΦΗ"
+        app:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYear" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
