@@ -4,9 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
+import kotlinx.android.parcel.Parcelize
 
 
 @Entity
+@Parcelize
 data class Team (
     @PrimaryKey(autoGenerate = true) override val id: Long,
     @ColumnInfo(name = "city_id") override val city_id: Long,

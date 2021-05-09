@@ -1,13 +1,18 @@
 package com.tripple_d.mycoolsportsapp.ui.data.sports
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Sport
+import com.tripple_d.mycoolsportsapp.ui.data.DataFragmentDirections
 
 class SportListAdapter(
     private val dataList: MutableList<Sport>
@@ -32,10 +37,9 @@ class SportListAdapter(
 
     override fun onBindViewHolder(holder: DataListViewHolder, position: Int) {
         holder.itemView.setOnClickListener { v ->
-            val activity = v!!.context as AppCompatActivity
-            val sportInfoFragment = SportInfoFragment(dataList[position])
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fgData, sportInfoFragment).addToBackStack("sup").commit()
+            val bundle = Bundle()
+            bundle.putParcelable("sport", dataList[position])
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_dataFragment_to_sportInfoFragment, bundle)
         }
         holder.itemView.findViewById<TextView>(R.id.tvDataTitle).text = dataList[position].name
     }

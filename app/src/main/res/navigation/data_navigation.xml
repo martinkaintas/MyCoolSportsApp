@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/data_navigation"
+    app:startDestination="@id/dataFragment">
+
+    <fragment
+        android:id="@+id/dataFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.DataFragment"
+        android:label="fragment_data"
+        tools:layout="@layout/fragment_data" >
+        <action
+            android:id="@+id/action_dataFragment_to_athleteInfoFragment"
+            app:destination="@id/athleteInfoFragment" />
+        <action
+            android:id="@+id/action_dataFragment_to_teamInfoFragment"
+            app:destination="@id/teamInfoFragment" />
+        <action
+            android:id="@+id/action_dataFragment_to_sportInfoFragment"
+            app:destination="@id/sportInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/athleteInfoFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.athletes.AthleteInfoFragment"
+        android:label="AthleteInfoFragment" />
+    <fragment
+        android:id="@+id/sportInfoFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportInfoFragment"
+        android:label="SportInfoFragment"/>
+    <fragment
+        android:id="@+id/teamInfoFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.teams.TeamInfoFragment"
+        android:label="TeamInfoFragment" />
+</navigation>

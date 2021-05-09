@@ -1,10 +1,12 @@
 package com.tripple_d.mycoolsportsapp.ui.data
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
@@ -32,10 +34,9 @@ class TeamListAdapter(
 
     override fun onBindViewHolder(holder: DataListViewHolder, position: Int) {
         holder.itemView.setOnClickListener { v ->
-            val activity = v!!.context as AppCompatActivity
-            val teamInfoFragment = TeamInfoFragment(dataList[position])
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fgData, teamInfoFragment).addToBackStack("sup").commit()
+            val bundle = Bundle()
+            bundle.putParcelable("team", dataList[position])
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_dataFragment_to_teamInfoFragment, bundle)
         }
         holder.itemView.findViewById<TextView>(R.id.tvDataTitle).text = dataList[position].name
     }

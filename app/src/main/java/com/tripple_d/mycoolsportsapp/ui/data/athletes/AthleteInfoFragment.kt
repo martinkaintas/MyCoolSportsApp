@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
 
-class AthleteInfoFragment(val athlete: Athlete): Fragment() {
+class AthleteInfoFragment(): Fragment() {
 
 
     override fun onCreateView(
@@ -18,6 +18,7 @@ class AthleteInfoFragment(val athlete: Athlete): Fragment() {
     ): View? {
 
         val athleteView = inflater.inflate(R.layout.fragment_athlete_info, container, false)
+        val athlete: Athlete = arguments?.getParcelable<Athlete>("athlete") as Athlete
         setAthleteInfo(athleteView, athlete)
         return athleteView
     }

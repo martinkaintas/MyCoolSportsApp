@@ -9,13 +9,13 @@ import android.widget.TextView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Sport
 
-class SportInfoFragment(val sport: Sport): Fragment() {
-
+class SportInfoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val sport: Sport = arguments?.getParcelable<Sport>("sport") as Sport
 
         val athleteView = inflater.inflate(R.layout.fragment_sport_info, container, false)
         setAthleteInfo(athleteView, sport)

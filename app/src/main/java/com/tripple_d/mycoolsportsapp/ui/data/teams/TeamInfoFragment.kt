@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
 import com.tripple_d.mycoolsportsapp.R
 
-class TeamInfoFragment(val team: Team): Fragment() {
+class TeamInfoFragment(): Fragment() {
 
 
     override fun onCreateView(
@@ -17,6 +17,7 @@ class TeamInfoFragment(val team: Team): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val team: Team = arguments?.getParcelable<Team>("team") as Team
         val athleteView = inflater.inflate(R.layout.fragment_team_info, container, false)
         setAthleteInfo(athleteView, team)
         return athleteView
