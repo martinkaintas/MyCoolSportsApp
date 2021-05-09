@@ -71,4 +71,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
 
+    implementation "com.google.android.gms:play-services-location:15.0.1"
+    implementation "com.google.android.gms:play-services-places:15.0.1"
+
 }
