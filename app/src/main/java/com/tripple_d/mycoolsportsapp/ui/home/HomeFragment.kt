@@ -1,33 +1,26 @@
 package com.tripple_d.mycoolsportsapp.ui.home
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.AthleteDAO.AthleteDao
 import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
-import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
-import com.tripple_d.mycoolsportsapp.models.Competitor.Team.TeamDao
 import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.models.Match.Participation
-import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
 import com.tripple_d.mycoolsportsapp.ui.match_details.MatchDetailsFragment
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class HomeFragment : Fragment(),IItemClickListener {
 
@@ -98,15 +91,24 @@ class HomeFragment : Fragment(),IItemClickListener {
     }
 
     override fun onItemClicked(match: Match) {
-        val fr: Fragment = MatchDetailsFragment(match)
+        val fr: Fragment = MatchDetailsFragment()
+        val args = Bundle()
+        args.putParcelable("match",match)
+        fr.arguments = args
         showMatchDetailsFragment(fr)
     }
 
     private fun showMatchDetailsFragment(fr: Fragment) {
         val fragmentManager: FragmentManager = parentFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.nav_host_fragment, fr)
-        fragmentTransaction.addToBackStack(null)
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fragmentTransaction.replace(R.id.fg_land_match_details_placeholder, fr)
+        } else {
+            fragmentTransaction.replace(R.id.nav_host_fragment, fr)
+        }
+        fragmentTransaction.addToBackStack("nav_host_fragment")
         fragmentTransaction.commitAllowingStateLoss()
     }
 }

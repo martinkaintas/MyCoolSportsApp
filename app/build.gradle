@@ -3,11 +3,16 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android.extensions'
 }
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+    androidExtensions {
+        experimental = true
+    }
+
 
     defaultConfig {
         applicationId "com.tripple_d.mycoolsportsapp"

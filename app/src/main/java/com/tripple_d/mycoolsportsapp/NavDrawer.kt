@@ -35,7 +35,7 @@ class NavDrawer : AppCompatActivity() {
 
         room_db = Room.databaseBuilder(applicationContext,CoolDatabase::class.java,"cool-db").allowMainThreadQueries().build()
 
-        if(room_db.sportDao().getAll().isEmpty()){
+            if(room_db.sportDao().getAll().isEmpty()){
             room_db.sportDao().insertAll(Sport(0,"NBA", "group", "male"))
         }
         if(room_db.cityDao().getAll().isEmpty()){

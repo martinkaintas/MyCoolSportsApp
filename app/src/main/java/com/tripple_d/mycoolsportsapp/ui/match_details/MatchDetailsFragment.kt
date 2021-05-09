@@ -1,5 +1,6 @@
 package com.tripple_d.mycoolsportsapp.ui.match_details
 
+import android.content.Context
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -23,7 +24,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class MatchDetailsFragment(val match: Match): Fragment() {
+class MatchDetailsFragment(): Fragment() {
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -31,6 +36,7 @@ class MatchDetailsFragment(val match: Match): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val match: Match = arguments?.getParcelable<Match>("match") as Match
 
         val root = inflater.inflate(R.layout.fragment_match_details, container, false)
         root.findViewById<TextView>(R.id.tvMatchSport).text = match.sport.name
