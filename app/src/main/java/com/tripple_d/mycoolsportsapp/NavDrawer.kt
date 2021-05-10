@@ -33,6 +33,7 @@ class NavDrawer : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        this.deleteDatabase("cool-db")
         room_db = Room.databaseBuilder(applicationContext,CoolDatabase::class.java,"cool-db").allowMainThreadQueries().build()
 
         if(room_db.sportDao().getAll().isEmpty()){
@@ -48,12 +49,12 @@ class NavDrawer : AppCompatActivity() {
         if(room_db.teamDao().getAll().isEmpty()){
             room_db.teamDao().insertAll(
                 Team(0,
-                    0,
-                    0,"PAOKARA","KAFKATZOGLEO",1969
+                    1,
+                    1,"PAOKARA","KAFKATZOGLEO",1969
                 ),
                 Team(0,
-                    0,
-                    0,"Ethniki TEI","TEI",1969
+                    2,
+                    1,"Ethniki TEI","TEI",1969
                 )
             )
         }
@@ -61,11 +62,11 @@ class NavDrawer : AppCompatActivity() {
             room_db.athleteDao().insertAll(
                 Athlete(0,"Pipis","Pipou",
                    1,
-                    0,1969
+                    1,1969
                 ),
                 Athlete(0,"Sifis","SIfou",
                     1,
-                    0,1969
+                    1,1969
                 ),
             )
         }

@@ -23,13 +23,28 @@
     <fragment
         android:id="@+id/athleteInfoFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.athletes.AthleteInfoFragment"
-        android:label="AthleteInfoFragment" />
+        android:label="AthleteInfoFragment">
+
+        <action
+            android:id="@+id/action_athleteInfoFragment_to_dataFragment"
+            app:destination="@id/dataFragment" />
+    </fragment>
     <fragment
         android:id="@+id/sportInfoFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportInfoFragment"
-        android:label="SportInfoFragment"/>
+        android:label="SportInfoFragment">
+
+        <action
+            android:id="@+id/action_sportInfoFragment_to_dataFragment"
+            app:destination="@id/dataFragment" />
+    </fragment>
     <fragment
         android:id="@+id/teamInfoFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.teams.TeamInfoFragment"
-        android:label="TeamInfoFragment" />
+        android:label="TeamInfoFragment">
+
+        <action
+            android:id="@+id/action_teamInfoFragment_to_dataFragment"
+            app:destination="@id/dataFragment" />
+    </fragment>
 </navigation>
