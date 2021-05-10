@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android.extensions'
 }
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
@@ -76,5 +77,8 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
+
+    implementation "com.google.android.gms:play-services-location:15.0.1"
+    implementation "com.google.android.gms:play-services-places:15.0.1"
 
 }

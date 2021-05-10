@@ -12,3 +12,4 @@ data class Sport(
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "sex") val sex: String,
 ): Parcelable
+

@@ -15,4 +15,4 @@ data class Athlete(
     @ColumnInfo(name = "city_id")  override val city_id: Long,
     @ColumnInfo(name = "sport_id") override val sport_id:Long,
     @ColumnInfo(name = "birth_year") val birth_year: Int,
-):Competitor(id, "$first_name $last_name",city_id,sport_id)
+):Competitor(id, "$first_name $last_name",city_id,sport_id), Parcelable

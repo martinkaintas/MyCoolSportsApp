@@ -10,3 +10,4 @@ open class Competitor(
     open val city_id: Long?,
     open val sport_id:Long?,
 ): Parcelable
+
