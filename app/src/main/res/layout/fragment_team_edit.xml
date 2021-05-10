@@ -18,15 +18,12 @@
 
     <EditText
         android:id="@+id/etTeamName"
-        android:layout_width="wrap_content"
+        style="@style/editText"
         android:layout_height="wrap_content"
-        android:hint="TAKIS"
         android:inputType="none"
-        android:text="TAKIS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTeamNameLabel"
-        tools:ignore="InvalidId"
-        tools:text="TAKIS" />
+        tools:ignore="InvalidId" />
 
     <TextView
         android:id="@+id/tvTeamStadiumLabel"

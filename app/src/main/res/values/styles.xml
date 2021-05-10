@@ -27,6 +27,20 @@
     </style>
 
 
+    <style name="editText" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width"> 200dp </item>
+        <item name="android:layout_height"> wrap_content </item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginTop">7dp</item>
+    </style>
+
+    <style name="spinner" parent="TextAppearance.AppCompat">
+        <item name="layout_constraintWidth_min"> 100dp </item>
+        <item name="android:layout_width"> wrap_content </item>
+        <item name="android:layout_height"> wrap_content </item>
+    </style>
+
     <style name="wrapper" parent="TextAppearance.AppCompat">
         <item name="android:padding">16dp</item>
     </style>

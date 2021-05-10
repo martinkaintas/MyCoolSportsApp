@@ -23,11 +23,13 @@ class SportInfoFragment : Fragment() {
         mainActivity = activity as NavDrawer
 
         val sport: Sport = arguments?.getParcelable<Sport>("sport") as Sport
-        val sportView = inflater.inflate(R.layout.fragment_sport_info, container, false)
-        sportView?.findViewById<Button>(R.id.btDeleteSport)
-            ?.setOnClickListener { deleteSport(sportView, sport) }
-        setAthleteInfo(sportView, sport)
-        return sportView
+        val sportInfoView = inflater.inflate(R.layout.fragment_sport_info, container, false)
+        sportInfoView?.findViewById<Button>(R.id.btDeleteSport)
+            ?.setOnClickListener { deleteSport(sportInfoView, sport) }
+        sportInfoView?.findViewById<Button>(R.id.btEditSport)
+            ?.setOnClickListener { editSport(sportInfoView, sport) }
+        setAthleteInfo(sportInfoView, sport)
+        return sportInfoView
     }
 
 
@@ -35,10 +37,10 @@ class SportInfoFragment : Fragment() {
         val athleteName = athleteView?.findViewById<TextView>(R.id.tvSportName)
         athleteName?.text = sport.name
 
-        val athleteSurname = athleteView?.findViewById<TextView>(R.id.tvSportType)
+        val athleteSurname = athleteView?.findViewById<TextView>(R.id.spSportType)
         athleteSurname?.text = sport.type.capitalize()
 
-        val athleteBirthYear = athleteView?.findViewById<TextView>(R.id.tvSportGender)
+        val athleteBirthYear = athleteView?.findViewById<TextView>(R.id.spSportGender)
         athleteBirthYear?.text = sport.sex.capitalize()
     }
 
@@ -47,4 +49,12 @@ class SportInfoFragment : Fragment() {
         sportView.findNavController()
             .navigate(R.id.action_sportInfoFragment_to_dataFragment, null)
     }
+
+    private fun editSport(sportView: View, sport: Sport) {
+        val bundle = Bundle()
+        bundle.putParcelable("sport", sport)
+        sportView.findNavController()
+            .navigate(R.id.action_sportInfoFragment_to_sportEditFragment, bundle)
+    }
+
 }

@@ -19,7 +19,12 @@
         <action
             android:id="@+id/action_dataFragment_to_sportInfoFragment"
             app:destination="@id/sportInfoFragment" />
+
+        <action
+            android:id="@+id/action_sportListFragment_to_sportEditFragment"
+            app:destination="@id/sportEditFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/athleteInfoFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.athletes.AthleteInfoFragment"
@@ -29,6 +34,23 @@
             android:id="@+id/action_athleteInfoFragment_to_dataFragment"
             app:destination="@id/dataFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/sportListFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportsFragment"
+        android:label="SportListFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/sportEditFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportEditFragment"
+        android:label="SportEditFragment">
+
+        <action
+        android:id="@+id/action_sportEditFragment_to_dataFragment"
+        app:destination="@id/dataFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/sportInfoFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportInfoFragment"
@@ -37,6 +59,10 @@
         <action
             android:id="@+id/action_sportInfoFragment_to_dataFragment"
             app:destination="@id/dataFragment" />
+
+        <action
+            android:id="@+id/action_sportInfoFragment_to_sportEditFragment"
+            app:destination="@id/sportEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/teamInfoFragment"

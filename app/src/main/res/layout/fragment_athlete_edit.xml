@@ -90,7 +90,7 @@
         tools:ignore="InvalidId" />
 
     <TextView
-        android:id="@+id/tvAthleteSportLabel"
+        android:id="@+id/tvSportEditTypeLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,11 +100,11 @@
         tools:text="ΑΘΛΗΜΑ" />
 
     <Spinner
-        android:id="@+id/tvSportType"
+        android:id="@+id/spSportType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteSportLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSportEditTypeLabel" />
 
     <TextView
         android:id="@+id/tvSportGenderLabel"
@@ -113,11 +113,11 @@
         android:layout_height="wrap_content"
         android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSportType"
+        app:layout_constraintTop_toBottomOf="@+id/spSportType"
         tools:text="ΕΤΟΣ ΓΕΝΝΗΣΗΣ" />
 
     <Spinner
-        android:id="@+id/tvSportGender"
+        android:id="@+id/spSportGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
         android:layout_marginTop="40dp"
         android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
 
     <Button
         android:id="@+id/btDeleteSport"
@@ -140,6 +140,6 @@
         android:text="ΔΙΑΓΡΑΦΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

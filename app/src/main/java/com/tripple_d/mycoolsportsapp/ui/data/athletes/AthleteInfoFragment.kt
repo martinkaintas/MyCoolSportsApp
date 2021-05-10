@@ -37,7 +37,7 @@ class AthleteInfoFragment() : Fragment() {
         val athleteSurname = athleteView?.findViewById<TextView>(R.id.tvAthleteSurname)
         athleteSurname?.text = athlete.last_name
 
-        val athleteBirthYear = athleteView?.findViewById<TextView>(R.id.tvSportGender)
+        val athleteBirthYear = athleteView?.findViewById<TextView>(R.id.spSportGender)
         athleteBirthYear?.text = athlete.birth_year.toString()
 
         val cityModel = mainActivity.room_db.cityDao().get(athlete.city_id)
@@ -47,7 +47,7 @@ class AthleteInfoFragment() : Fragment() {
         teamCountry?.text = cityModel.country
 
         val sportModel = mainActivity.room_db.sportDao().get(athlete.sport_id)
-        val teamSport = athleteView?.findViewById<TextView>(R.id.tvSportType)
+        val teamSport = athleteView?.findViewById<TextView>(R.id.spSportType)
         teamSport?.text = sportModel.name
 
     }
