@@ -96,10 +96,6 @@ class SportEditFragment : Fragment() {
         else{
             updateSport(sportView, selectedSportId)
         }
-
-        // Navigate to data fragment
-        sportView.findNavController()
-            .navigate(R.id.action_sportEditFragment_to_dataFragment, null)
     }
 
     private fun createSport(sportView: View) {
@@ -130,6 +126,10 @@ class SportEditFragment : Fragment() {
         val duration = Toast.LENGTH_SHORT
         val toast = Toast.makeText(activity, successMessage, duration)
         toast.show()
+
+        // Navigate to data fragment
+        sportView.findNavController()
+            .navigate(R.id.action_sportEditFragment_to_dataFragment, null)
     }
 
 
@@ -161,6 +161,9 @@ class SportEditFragment : Fragment() {
         val toast = Toast.makeText(activity, successMessage, duration)
         toast.show()
 
+        // Navigate to data fragment
+        sportView.findNavController()
+            .navigate(R.id.action_sportEditFragment_to_dataFragment, null)
     }
 
 
