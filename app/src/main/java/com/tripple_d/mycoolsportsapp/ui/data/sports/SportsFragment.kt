@@ -1,17 +1,22 @@
+package com.tripple_d.mycoolsportsapp.ui.data.sports
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.ui.data.sports.SportListAdapter
-import com.tripple_d.mycoolsportsapp.ui.data.sports.SportViewModel
 
 class SportsFragment : Fragment() {
 
     private lateinit var dataViewModel: SportViewModel
+    private lateinit var mainActivity: NavDrawer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,13 +25,23 @@ class SportsFragment : Fragment() {
     ): View? {
         dataViewModel =
             ViewModelProvider(this).get(SportViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_sports, container, false)
-        val recyclerView = root.findViewById<RecyclerView>(R.id.rvSports)
+        val sportsView = inflater.inflate(R.layout.fragment_sports, container, false)
+        val recyclerView = sportsView.findViewById<RecyclerView>(R.id.rvSports)
+
+        mainActivity = activity as NavDrawer
+        val sports = mainActivity.room_db.sportDao().getAll().toMutableList()
         recyclerView.apply {
-            adapter = SportListAdapter(
-                mutableListOf<String>("Ποδόσφαιρο", "Μπάσκετ", "Τέννις", "Στίβος")
-            )
+            adapter = SportListAdapter(sports)
         }
-        return root
+
+        sportsView?.findViewById<FloatingActionButton>(R.id.fabAddSport)
+            ?.setOnClickListener { navigateToAddSport(sportsView) }
+
+        return sportsView
+    }
+
+    private fun navigateToAddSport(sportsView: View) {
+        Navigation.findNavController(sportsView)
+            .navigate(R.id.action_sportListFragment_to_sportEditFragment, null)
     }
 }

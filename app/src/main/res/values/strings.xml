@@ -25,6 +25,16 @@
 
     <string name="fab_add">Προσθήκη</string>
 
+    <string-array name="SportTypes">
+        <item>Team</item>
+        <item>Single</item>
+    </string-array>
+
+    <string-array name="Genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <!--TODO: Kappa-->
     <string name="menu_data">Διαχείριση Δεδομένων</string>
     <!-- TODO: Remove or change this placeholder text -->

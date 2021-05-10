@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/tvSportNameLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ονομα"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvSportName"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportNameLabel"
+        tools:ignore="InvalidId" />
+
+
+    <TextView
+        android:id="@+id/tvSportTypeLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportName"
+        android:text="ΕΙΔΟΣ" />
+
+    <TextView
+        android:id="@+id/spSportType"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportTypeLabel" />
+
+    <TextView
+        android:id="@+id/tvSportGenderLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spSportType"
+        android:text="ΦΥΛΟ" />
+
+    <TextView
+        android:id="@+id/spSportGender"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
+
+    <Button
+        android:id="@+id/btEditSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+
+    <Button
+        android:id="@+id/btDeleteSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΔΙΑΓΡΑΦΗ"
+        app:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
