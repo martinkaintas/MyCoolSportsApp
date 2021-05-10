@@ -164,7 +164,6 @@ class SportEditFragment : Fragment() {
     }
 
 
-
     private fun cancelEdit(sportView: View) {
         sportView.findNavController()
             .navigate(R.id.action_sportEditFragment_to_dataFragment, null)
