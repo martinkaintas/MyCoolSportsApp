@@ -118,7 +118,7 @@ class SportEditFragment : Fragment() {
 
         // Add the sport to the database
         mainActivity.room_db.sportDao().insertAll(
-            Sport(0, sportName, sportType, sportGender)
+            Sport(0, sportName, sportType, sportGender,2)
         )
 
         // Show success message
@@ -153,7 +153,7 @@ class SportEditFragment : Fragment() {
 
         // Add the sport to the database
         mainActivity.room_db.sportDao().update(
-            Sport(selectedSportId, sportName, sportType, sportGender)
+            Sport(selectedSportId, sportName, sportType, sportGender,2  )
         )
         // Show success message
         val successMessage = "Το άθλημα ανανεώθηκε επιτυχώς!"

@@ -107,7 +107,7 @@ class MatchDetailsFragment(): Fragment() {
         var day = getGreekDay(date.dayOfWeek.toString())
         var formatter = DateTimeFormatter.ofPattern("dd/MM - HH:mm")
         var calendarDate = date.format(formatter)
-        return day + " " + calendarDate
+        return "$day $calendarDate"
     }
 }
 
