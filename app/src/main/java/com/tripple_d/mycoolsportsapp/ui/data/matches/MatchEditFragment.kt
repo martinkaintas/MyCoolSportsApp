@@ -49,7 +49,7 @@ class MatchEditFragment : Fragment() {
         setFormOptions()
             matchView?.findViewById<Button>(R.id.btCancelSport)
                 ?.setOnClickListener { goBack() }
-            matchView?.findViewById<Button>(R.id.btEditSport)
+            matchView?.findViewById<Button>(R.id.btEditMatch)
                 ?.setOnClickListener { onSubmit() }
 
         return matchView

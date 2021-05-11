@@ -39,7 +39,7 @@ class MatchListAdapter(
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable("match", dataList[position])
-            Navigation.findNavController(holder.itemView).navigate(R.id.action_matchListFragment_to_matchEditFragment, bundle)
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_matchListFragment_to_MatchAdminViewFragment, bundle)
         }
         holder.itemView.findViewById<TextView>(R.id.tvDataTitle).text = formatTitle(dataList[position])
 
