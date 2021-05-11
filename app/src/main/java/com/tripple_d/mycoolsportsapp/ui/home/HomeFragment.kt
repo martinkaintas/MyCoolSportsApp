@@ -3,6 +3,7 @@ package com.tripple_d.mycoolsportsapp.ui.home
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.model.LatLng
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.City.City
@@ -28,6 +30,7 @@ import com.tripple_d.mycoolsportsapp.ui.match_details.MatchDetailsFragment
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class HomeFragment : Fragment(),IItemClickListener {
@@ -38,9 +41,6 @@ class HomeFragment : Fragment(),IItemClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchMatches(recyclerView:RecyclerView) {
         val matches: MutableList<Match> = mutableListOf<Match>()
-
-        // Cancel previews notifications so that there are no duplicates (still spamming)
-        NotificationManagerCompat.from(requireContext()).cancelAll()
 
         mainActivity.firebase_db.collection("Matches")
             .get()
@@ -62,16 +62,19 @@ class HomeFragment : Fragment(),IItemClickListener {
                     val date = LocalDateTime.ofInstant(
                         Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
                         TimeZone.getDefault().toZoneId())
-
-                    showMatchNotification("${getNotificationTitle(participations)}", formatDate(date), getNotificationBigText(date,city,sport,participations))
+                    val matchObj = Match(
+                        match.getLong("id"),
+                        date,
+                        city,
+                        sport,
+                        participations
+                    )
+                    // if match is today
+                    if(LocalDateTime.now().until(date, ChronoUnit.DAYS).compareTo(0) == 0 && date.isAfter(LocalDateTime.now())){
+                        showMatchNotification(matchObj,"${getNotificationTitle(participations)}", formatDate(date), getNotificationBigText(date,city,sport,participations))
+                    }
                     matches.add(
-                        Match(
-                            match.getLong("id"),
-                            date,
-                            city,
-                            sport,
-                            participations
-                        )
+                        matchObj
                     )
 
                 }
@@ -93,9 +96,20 @@ class HomeFragment : Fragment(),IItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         mainActivity = activity as NavDrawer
+
+        val bundle = activity?.intent?.getParcelableExtra<Bundle>("bundle")
+        val match: Match? = bundle?.getParcelable("match")
+        (activity as NavDrawer).intent.removeExtra("bundle")
+        if (match != null) {
+            onItemClicked(match)
+        }
+
+        // Cancel previous notifications so that there are no duplicates (still spamming)
+        NotificationManagerCompat.from(requireContext()).cancelAll()
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.matches_recycler)
         fetchMatches(recyclerView)
@@ -103,12 +117,16 @@ class HomeFragment : Fragment(),IItemClickListener {
         return root
     }
 
-    private fun showMatchNotification(title: String = "Title", text: String = "Text", bigText: String = "Big Text") {
+    private fun showMatchNotification(match: Match, title: String = "Title", text: String = "Text", bigText: String = "Big Text") {
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(context, HomeFragment::class.java).apply {
+        val intent = Intent(context, NavDrawer::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val args = Bundle()
+        args.putParcelable("match",match)
+        intent.putExtra("bundle", args)
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val builder = NotificationCompat.Builder(mainActivity, mainActivity.CHANNEL_ID)
             .setSmallIcon(R.drawable.bell)
@@ -141,8 +159,10 @@ class HomeFragment : Fragment(),IItemClickListener {
         var retVal: String = "${formatDate(date)} | ${city.name}, ${city.country}\n" +
                 "${sport.name} / ${sport.sex.capitalize()}\n" +
                 "Participations: \n"
+        var i = 1
         for (participation in participations){
-            retVal += "${participation.competitor.name} ${participation.score} \n"
+            retVal += "${i}. ${participation.competitor.name}\n"
+            i++
         }
 
 
