@@ -102,7 +102,8 @@ class MultiSelectSpinner : androidx.appcompat.widget.AppCompatSpinner, OnMultiCh
      */
     fun setItems(items: Array<String>?) {
         _items = items
-        _proxyAdapter.add("${_items?.size} Επιλογές")
+        if(selectedIndicies.isEmpty())
+            _proxyAdapter.add("${_items?.size} Επιλογές")
         _selection = BooleanArray(_items!!.size)
         Arrays.fill(_selection, false)
     }
@@ -166,6 +167,9 @@ class MultiSelectSpinner : androidx.appcompat.widget.AppCompatSpinner, OnMultiCh
                 throw IllegalArgumentException("Index $index is out of bounds.")
             }
         }
+        _proxyAdapter.clear()
+        _proxyAdapter.add(buildSelectedItemString())
+        _itemSelectedCallback(selectedIndicies)
     }
 
     /**
@@ -215,9 +219,6 @@ class MultiSelectSpinner : androidx.appcompat.widget.AppCompatSpinner, OnMultiCh
             }
         }
 
-        if(!foundOne){
-            sb.append("${_items!!.size} Επιλογές")
-        }
         return sb.toString()
     }
 }

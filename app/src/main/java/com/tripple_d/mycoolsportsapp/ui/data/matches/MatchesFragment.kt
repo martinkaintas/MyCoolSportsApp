@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match.Match
@@ -33,6 +35,9 @@ class MatchesFragment : Fragment() {
         val recyclerView = root.findViewById<RecyclerView>(R.id.rvMatches)
         mainActivity.fetchMatches {matches -> setFetchedMatches(recyclerView,matches) }
 
+        root.findViewById<FloatingActionButton>(R.id.fbtnAdminMatches).setOnClickListener{
+            Navigation.findNavController(recyclerView).navigate(R.id.action_matchListFragment_to_matchEditFragment)
+        }
         return root
     }
 

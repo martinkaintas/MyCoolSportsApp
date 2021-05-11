@@ -19,9 +19,8 @@ import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
 import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.models.Match.Participation
 import com.tripple_d.mycoolsportsapp.models.Sport
+import kotlinx.android.synthetic.main.match_participant_item.*
 import java.sql.Timestamp
-import java.time.LocalDate
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -32,6 +31,11 @@ class MatchEditFragment : Fragment() {
     private lateinit var chosenCompetitors: MutableList<Competitor>
     private var match: Match? = null
     private lateinit var participantAdapter: MatchScoreListAdapter
+    private lateinit var competitorSpinner: MultiSelectSpinner
+    private lateinit var dPicker: DatePicker
+    private lateinit var matchView: View
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -39,80 +43,122 @@ class MatchEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mainActivity = activity as NavDrawer
-        val matchView = inflater.inflate(R.layout.fragment_admin_match_edit, container, false)
-        match = arguments?.getParcelable<Match>("match") as Match
+        matchView = inflater.inflate(R.layout.fragment_admin_match_edit, container, false)
+        match = arguments?.getParcelable<Match>("match")
 
-        setFormOptions(matchView)
+        setFormOptions()
             matchView?.findViewById<Button>(R.id.btCancelSport)
-                ?.setOnClickListener { cancelEdit(matchView) }
+                ?.setOnClickListener { goBack() }
             matchView?.findViewById<Button>(R.id.btEditSport)
-                ?.setOnClickListener { onSubmit(matchView) }
+                ?.setOnClickListener { onSubmit() }
 
         return matchView
     }
 
-    private fun setFormOptions(matchView: View) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setFormOptions() {
         val sportSpinner = matchView?.findViewById<Spinner>(R.id.spAdminSport)
         val sportArray: List<Sport> = mainActivity.room_db.sportDao().getAll()
         val sportTitleArray: ArrayList<String> = sportArray.map { sport -> sport.name } as ArrayList<String>
+        dPicker = matchView?.findViewById<DatePicker>(R.id.dpMatchDate)
+        competitorSpinner = matchView.findViewById(R.id.mspCompetitors)
 
         //disable if no competitors are selected
         matchView?.findViewById<Spinner>(R.id.spAdminPlace).isEnabled = false
 
-        this.context?.let { ArrayAdapter<String>(it, android.R.layout.simple_spinner_item,sportTitleArray) }.also {
+
+        if(match!=null) {
+            val chosenSportIndex = match!!.let { sportArray.indexOf(it.sport) }
+            sportSpinner.setSelection(chosenSportIndex)
+
+            competitors =
+                if (match!!.sport.type == "team") mainActivity.room_db.teamDao()
+                    .getBySport(match!!.sport.id).toMutableList()
+                else mainActivity.room_db.athleteDao().getBySport(match!!.sport.id).toMutableList()
+
+            val selectedIndices = match!!.participations.map { participation ->
+                competitors.indexOf(participation.competitor)
+            }
+            competitorSpinner.setItemSelectedCallback {
+                competitorCallback(matchView,
+                    match!!.sport, competitorSpinner.selectedIndicies)
+            }
+            competitorSpinner.setItems(competitors.map { competitor -> competitor.name })
+            competitorSpinner.setSelection(selectedIndices.toIntArray())
+            setAvailablePlaces()
+
+
+            updateScoreBoard(match!!.sport,match!!.participations)
+            dPicker.updateDate(match!!.date.year,match!!.date.month.value,match!!.date.dayOfMonth)
+        }
+
+        this.context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item,sportTitleArray) }.also {
                 adapter ->
             adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             sportSpinner.adapter = adapter
         }
+
+
+
 
         sportSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val competitorSpinner = matchView.findViewById(R.id.mspCompetitors) as MultiSelectSpinner
                 val chosenSport = sportArray[position]
                 competitors =
                     if(chosenSport.type=="team") mainActivity.room_db.teamDao().getBySport(chosenSport.id).toMutableList()
                     else mainActivity.room_db.athleteDao().getBySport(chosenSport.id).toMutableList()
 
+                val totalChosenCompetitors = if(match!=null) match!!.participations.size else 0
                 val competitorStatus = matchView.findViewById(R.id.tvAdminCompetitorStatus) as TextView
-                competitorStatus.text = "0 / ${chosenSport.total_competitors}"
+                competitorStatus.text = "$totalChosenCompetitors / ${chosenSport.total_competitors}"
                 competitorSpinner.setMaxItems(chosenSport.total_competitors)
-
-                competitorSpinner.setItemSelectedCallback { choices ->
-                    updateScoreBoard(matchView,chosenSport,choices as List<String>)
-
-                    // Show total selections
-                    val totalChoices = (choices as List<Int>).size
-                    competitorStatus.text = "${totalChoices} / ${chosenSport.total_competitors}"
-
-                    // Not enough choices handle
-                    if(totalChoices<chosenSport.total_competitors)
-                        if(totalChoices==0)
-                        else competitorStatus.setTextColor(Color.RED)
-
-                    setAvailablePlaces(choices, matchView)
+                if(match==null) {
+                    competitorSpinner.setItemSelectedCallback {
+                        competitorCallback(matchView,
+                            chosenSport, competitorSpinner.selectedIndicies)
+                    }
+                    competitorSpinner.setItems(competitors.map { competitor -> competitor.name })
                 }
+                if(match!=null && match!!.sport != chosenSport)
                 competitorSpinner.setItems(competitors.map { competitor->competitor.name })
             }
 
         }
     }
 
+    private fun competitorCallback(matchView: View, chosenSport: Sport, choices: List<Int>){
+        updateScoreBoard(chosenSport,null )
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun onSubmit(matchView: View) {
-            createMatch(matchView)
+        // Show total selections
+        val totalChoices = choices.size
+        val competitorStatus = matchView.findViewById(R.id.tvAdminCompetitorStatus) as TextView
+        competitorStatus.text = "${totalChoices} / ${chosenSport.total_competitors}"
 
-//            updateMatch(sportView, selectedSportId)
+        // Not enough choices handle
+        if(totalChoices<chosenSport.total_competitors)
+            if(totalChoices==0)
+            else competitorStatus.setTextColor(Color.RED)
+
+        setAvailablePlaces()
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createMatch(matchView: View) {
+    private fun onSubmit() {
+
+
         //Sport
         val sportSpinner = matchView?.findViewById<Spinner>(R.id.spAdminSport)
         val sport = mainActivity.room_db.sportDao().getByName(sportSpinner.selectedItem.toString())
+
+
+        if(participantAdapter.dataParticipants.size<sport.total_competitors){
+            Toast.makeText(this.context,"Υπάρχει κάποιο πρόβλημα. Ελέγξτε τα στοιχεία.",Toast.LENGTH_SHORT).show()
+            return
+        }
 
         //City
         val citySpinner = matchView?.findViewById<Spinner>(R.id.spAdminPlace)
@@ -120,7 +166,7 @@ class MatchEditFragment : Fragment() {
 
         //Date
         val dPicker = matchView?.findViewById<DatePicker>(R.id.dpMatchDate)
-        val date = Timestamp.valueOf("${dPicker.year}-${dPicker.month}-${dPicker.dayOfMonth} 00:00:00")
+        val date = Timestamp.valueOf("${dPicker.year}-${dPicker.month}-${dPicker.dayOfMonth} 21:00:00")
 
         //participations
         val participations = arrayListOf(hashMapOf<String, Any?>())
@@ -134,17 +180,47 @@ class MatchEditFragment : Fragment() {
         }
 
 
-
         val add = HashMap<String,Any>()
         add["city"] = city.id
         add["date"] = date
         add["sport_id"] = sport.id
         add["participants"] = participations
         add["id"] = city.id+sport.id+participantAdapter.dataParticipants[0].competitor.id
-        mainActivity.firebase_db.collection("Matches").add(add)
+
+        if(match == null)
+            createMatch(add)
+        else updateMatch(add)
     }
 
-    private fun setAvailablePlaces(choices: List<Int>,matchView: View){
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createMatch(add:HashMap<String,Any>) {
+        mainActivity.firebase_db.collection("Matches").add(add).addOnSuccessListener {
+            Toast.makeText(this.context,"Επιτυχής Προσθήκη.",Toast.LENGTH_LONG).show()
+            goBack()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updateMatch(add:HashMap<String,Any>) {
+        mainActivity.firebase_db.collection("Matches")
+            .get()
+            .addOnSuccessListener { result ->
+                for (matchResult in result) {
+                    if (matchResult.data["id"] == match!!.id) {
+                        matchResult.id
+                        mainActivity.firebase_db.collection("Matches").document(matchResult.id)
+                            .update(add).addOnSuccessListener {
+                                Toast.makeText(this.context,"Επιτυχής Ενημέρωση.",Toast.LENGTH_LONG).show()
+                                goBack()
+                            }
+                        break
+                    }
+                }
+            }
+    }
+
+    private fun setAvailablePlaces(){
+        val choices = competitorSpinner.selectedIndicies
         val placesIds = mutableListOf<Long>()
         for (choice in choices){
             competitors[choice].city_id?.let { placesIds.add(it) }
@@ -165,7 +241,7 @@ class MatchEditFragment : Fragment() {
     }
 
 
-    private fun setChosenCompetitors(matchView: View,sport: Sport,choices:List<String>){
+    private fun setChosenCompetitors(sport: Sport){
         val competitorSpinner = matchView?.findViewById<MultiSelectSpinner>(R.id.mspCompetitors)
         if(sport.type=="team")
             chosenCompetitors =
@@ -182,24 +258,28 @@ class MatchEditFragment : Fragment() {
         }
     }
 
-    private fun  updateScoreBoard(matchView: View,chosenSport:Sport,choices:List<String>){
+    private fun  updateScoreBoard(chosenSport:Sport,participations: MutableList<Participation>?){
         val recyclerView = matchView.findViewById<RecyclerView>(R.id.rvAdminScore)
-        val participations = mutableListOf<Participation>()
-        setChosenCompetitors(matchView,chosenSport, choices)
+        setChosenCompetitors(chosenSport)
 
-        for (competitor in chosenCompetitors){
-            participations.add(Participation(0,competitor))
-        }
 
-        participantAdapter = MatchScoreListAdapter(participations)
+        participantAdapter = if (participations == null) {
+            val newParticipations = mutableListOf<Participation>()
+            for (competitor in chosenCompetitors){
+                newParticipations.add(Participation(0,competitor))
+            }
+            MatchScoreListAdapter(newParticipations)
+        } else MatchScoreListAdapter(participations)
+
+
         recyclerView.apply {
             adapter = participantAdapter
         }
         participantAdapter.notifyDataSetChanged()
     }
 
-    private fun cancelEdit(matchView: View) {
+    private fun goBack() {
         matchView.findNavController()
-            .navigate(R.id.action_sportEditFragment_to_dataFragment, null)
+            .navigate(R.id.action_matchEditFragment_to_dataFragment, null)
     }
 }
