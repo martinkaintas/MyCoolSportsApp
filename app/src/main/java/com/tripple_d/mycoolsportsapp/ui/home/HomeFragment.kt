@@ -48,17 +48,18 @@ class HomeFragment : Fragment(),IItemClickListener {
             .addOnSuccessListener { result ->
                 for (match in result) {
                     val sport = mainActivity.room_db.sportDao().get(match.data["sport_id"] as Long)
-                    val participations : MutableList<Participation> = mutableListOf<Participation>()
+                    val participations: MutableList<Participation> = mutableListOf<Participation>()
                     val city = mainActivity.room_db.cityDao().get(match.data["city"] as Long)
-                    for (participation in match.get("participants") as ArrayList<HashMap<String,String>>){
+                    for (participation in match.get("participants") as ArrayList<HashMap<String, String>>) {
                         val competitor: Competitor
                         //Todo: find a better way in order to improve performance (sorry, burnout)
-                        competitor = if(sport.type=="group")
+                        competitor = if (sport.type == "group")
                             mainActivity.room_db.teamDao().get(participation["id"] as Long)
                         else
                             mainActivity.room_db.athleteDao().get(participation["id"] as Long)
 
-                        participations.add(Participation(participation["score"] as Long, competitor))
+                        participations.add(Participation(participation["score"] as Long,
+                            competitor))
                     }
                     val date = LocalDateTime.ofInstant(
                         Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
@@ -71,8 +72,13 @@ class HomeFragment : Fragment(),IItemClickListener {
                         participations
                     )
                     // if match is today
-                    if(LocalDateTime.now().until(date, ChronoUnit.DAYS).compareTo(0) == 0 && date.isAfter(LocalDateTime.now())){
-                        showMatchNotification(matchObj,"${getNotificationTitle(participations)}", formatDate(date), getNotificationBigText(date,city,sport,participations))
+                    if (LocalDateTime.now().until(date, ChronoUnit.DAYS)
+                            .compareTo(0) == 0 && date.isAfter(LocalDateTime.now())
+                    ) {
+                        showMatchNotification(matchObj,
+                            "${getNotificationTitle(participations)}",
+                            formatDate(date),
+                            getNotificationBigText(date, city, sport, participations))
                     }
                     matches.add(
                         matchObj
@@ -86,6 +92,7 @@ class HomeFragment : Fragment(),IItemClickListener {
                 }
                 matchAdapter.notifyDataSetChanged()
             }
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
