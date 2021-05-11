@@ -122,8 +122,8 @@ class NavDrawer : AppCompatActivity() {
                     val city = room_db.cityDao().get(match.data["city"] as Long)
                     for (participation in match.get("participants") as ArrayList<HashMap<String, String>>){
                         //Todo: find a better way in order to improve performance (sorry, burnout)
-                        val competitor: Competitor = if(sport.type=="group")
-                            room_db.teamDao().get(participation["id"] as Long)
+                        val competitor: Competitor = if(sport.type=="team")
+                                room_db.teamDao().get(participation["id"] as Long)
                         else
                             room_db.athleteDao().get(participation["id"] as Long)
 

@@ -52,7 +52,6 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
         holder.itemView.findViewById<TextView>(R.id.match_date).text = calendarDate
         holder.itemView.findViewById<TextView>(R.id.match_time).text = calendarTime
 
-        // mini-hack: RV clicks blocked bound fragment change
         holder.participantRV.setOnTouchListener { v, _ ->
             itemClickListener.onItemClicked(dataSet[position])
             return@setOnTouchListener true

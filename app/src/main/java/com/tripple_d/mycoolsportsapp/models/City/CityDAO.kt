@@ -15,7 +15,7 @@ interface CityDao {
     fun getAll(): List<City>
 
     @Query("SELECT * FROM city WHERE id IN (:cityIds)")
-    fun loadAllByIds(cityIds: IntArray): List<City>
+    fun loadAllByIds(cityIds: MutableList<Long>): List<City>
 
     @Query("SELECT * FROM city WHERE name LIKE :name")
     fun findByName(name: String): City
