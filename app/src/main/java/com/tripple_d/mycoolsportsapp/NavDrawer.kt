@@ -1,7 +1,9 @@
 package com.tripple_d.mycoolsportsapp
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,9 +18,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.type.LatLng
 import com.tripple_d.mycoolsportsapp.models.*
 import com.tripple_d.mycoolsportsapp.models.City.City
+import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
 import com.tripple_d.mycoolsportsapp.models.Match.Match
+import com.tripple_d.mycoolsportsapp.models.Match.Participation
 import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
+import java.time.Instant
+import java.time.LocalDateTime
+import java.util.*
 
 class NavDrawer : AppCompatActivity() {
 
@@ -100,5 +107,47 @@ class NavDrawer : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun fetchMatches(callback: ((MutableList<Match>) -> Unit)? = null) {
+        val matches = mutableListOf<Match>()
+
+        firebase_db.collection("Matches")
+            .get()
+            .addOnSuccessListener { result ->
+                for (match in result) {
+                    val sport = room_db.sportDao().get(match.data["sport_id"] as Long)
+                    val participations : MutableList<Participation> = mutableListOf<Participation>()
+                    val city = room_db.cityDao().get(match.data["city"] as Long)
+                    for (participation in match.get("participants") as ArrayList<HashMap<String, String>>){
+                        //Todo: find a better way in order to improve performance (sorry, burnout)
+                        val competitor: Competitor = if(sport.type=="group")
+                            room_db.teamDao().get(participation["id"] as Long)
+                        else
+                            room_db.athleteDao().get(participation["id"] as Long)
+
+                        participations.add(Participation(participation["score"] as Long, competitor))
+                    }
+
+                    matches.add(
+                        Match(
+                            match.getLong("id"),
+                            LocalDateTime.ofInstant(
+                                Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
+                                TimeZone.getDefault().toZoneId()),
+                            city,
+                            sport,
+                            participations
+                        )
+                    )
+
+                }
+
+
+                if (callback != null) {
+                    callback(matches)
+                }
+            }
     }
 }
