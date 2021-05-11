@@ -1,5 +1,9 @@
 package com.tripple_d.mycoolsportsapp
 
+
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -15,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.type.LatLng
 import com.tripple_d.mycoolsportsapp.models.*
 import com.tripple_d.mycoolsportsapp.models.City.City
 import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
@@ -32,7 +35,8 @@ class NavDrawer : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     var firebase_db:FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var room_db:CoolDatabase
-
+    val CHANNEL_ID = "000"
+    var notificationId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +44,16 @@ class NavDrawer : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        createNotificationChannel()
+
         this.deleteDatabase("cool-db")
         room_db = Room.databaseBuilder(applicationContext,CoolDatabase::class.java,"cool-db").allowMainThreadQueries().build()
 
         if(room_db.sportDao().getAll().isEmpty()){
-            room_db.sportDao().insertAll(Sport(0,"NBA", "team", "male",2))
+            room_db.sportDao().insertAll(
+                Sport(0,"NBA", "team", "male",2),
+                Sport(0,"Tennis", "single", "female",2)
+            )
         }
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
@@ -75,6 +84,14 @@ class NavDrawer : AppCompatActivity() {
                     1,
                     1,1969
                 ),
+                Athlete(0,"Pipa","Pipou",
+                    1,
+                    2,1942
+                ),
+                Athlete(0,"Sofoklia","SIfou",
+                    2,
+                    2,1945
+                ),
             )
         }
 
@@ -96,6 +113,23 @@ class NavDrawer : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

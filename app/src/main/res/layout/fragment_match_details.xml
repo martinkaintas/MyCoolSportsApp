@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvMatchSport"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvMatchSport"
-        app:srcCompat="@drawable/ic_baseline_sports_basketball_24_cyan" />
+        app:srcCompat="@drawable/sports_cyan" />
 
     <TextView
         android:id="@+id/tvMatchSportTitle"
