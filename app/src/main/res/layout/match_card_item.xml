@@ -50,8 +50,8 @@
                     android:contentDescription="@string/home__match_icon_desc"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_sports_basketball_24"
-                    tools:srcCompat="@drawable/ic_baseline_sports_basketball_24" />
+                    app:srcCompat="@drawable/sports"
+                    tools:srcCompat="@drawable/sports" />
 
                 <TextView
                     android:id="@+id/match_date"

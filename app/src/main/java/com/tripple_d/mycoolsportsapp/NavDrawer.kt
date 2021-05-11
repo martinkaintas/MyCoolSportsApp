@@ -42,7 +42,10 @@ class NavDrawer : AppCompatActivity() {
         room_db = Room.databaseBuilder(applicationContext,CoolDatabase::class.java,"cool-db").allowMainThreadQueries().build()
 
         if(room_db.sportDao().getAll().isEmpty()){
-            room_db.sportDao().insertAll(Sport(0,"NBA", "team", "male",2))
+            room_db.sportDao().insertAll(
+                Sport(0,"NBA", "team", "male",2),
+                Sport(0,"Tennis", "single", "female",2)
+            )
         }
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
@@ -72,6 +75,14 @@ class NavDrawer : AppCompatActivity() {
                 Athlete(0,"Sifis","SIfou",
                     1,
                     1,1969
+                ),
+                Athlete(0,"Pipa","Pipou",
+                    1,
+                    2,1942
+                ),
+                Athlete(0,"Sofoklia","SIfou",
+                    2,
+                    2,1945
                 ),
             )
         }
