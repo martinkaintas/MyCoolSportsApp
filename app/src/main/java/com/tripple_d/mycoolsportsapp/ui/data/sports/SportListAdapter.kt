@@ -12,7 +12,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Sport
-import com.tripple_d.mycoolsportsapp.ui.data.DataFragmentDirections
 
 class SportListAdapter(
     private val dataList: MutableList<Sport>
