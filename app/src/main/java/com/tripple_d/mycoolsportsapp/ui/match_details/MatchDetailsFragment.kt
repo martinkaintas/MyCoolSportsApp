@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,9 +18,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import com.tripple_d.mycoolsportsapp.R
+import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.ui.map.MapsActivity
 import java.io.IOException
-import com.tripple_d.mycoolsportsapp.models.Match.Match
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -57,7 +58,31 @@ class MatchDetailsFragment(): Fragment() {
             showMap(match.city.name + "  " + match.city.country)
         }
 
+        match.sport.name?.let { changeImage(it.toLowerCase(), root) }
+
         return root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun changeImage(sport: String, view: View){
+        if (sport.isNullOrBlank()) return
+        val img = view.findViewById<ImageView>(R.id.ivMatchSport)
+
+        val basketballIcon = requireContext().resources.getDrawable(R.drawable.ic_baseline_sports_basketball_24_cyan, requireContext().theme)
+        val footballIcon = requireContext().resources.getDrawable(R.drawable.sports_soccer_cyan, requireContext().theme)
+        val sportsIcon = requireContext().resources.getDrawable(R.drawable.sports_cyan, requireContext().theme)
+        val mmaIcon = requireContext().resources.getDrawable(R.drawable.sports_mma_cyan, requireContext().theme)
+        val runningIcon = requireContext().resources.getDrawable(R.drawable.sports_running_cyan, requireContext().theme)
+        val tennisIcon = requireContext().resources.getDrawable(R.drawable.sports_tennis_cyan, requireContext().theme)
+        val volleyballIcon = requireContext().resources.getDrawable(R.drawable.sports_volleyball_cyan, requireContext().theme)
+
+        if (sport.contains("basket") || sport == "nba") img.setImageDrawable(basketballIcon)
+        else if( sport == "football" || sport == "soccer") img.setImageDrawable(footballIcon)
+        else if( sport == "mma" || sport == "box") img.setImageDrawable(mmaIcon)
+        else if( sport == "running" || sport == "sprint" || sport == "marathon") img.setImageDrawable(runningIcon)
+        else if( sport == "tennis") img.setImageDrawable(tennisIcon)
+        else if( sport.contains("volley")) img.setImageDrawable(volleyballIcon)
+        else  img.setImageDrawable(sportsIcon)
     }
 
     fun showMap(location: String){

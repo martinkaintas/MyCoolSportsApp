@@ -4,8 +4,10 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match.Match
@@ -52,6 +54,8 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
         holder.itemView.findViewById<TextView>(R.id.match_date).text = calendarDate
         holder.itemView.findViewById<TextView>(R.id.match_time).text = calendarTime
 
+        dataSet[position].sport.name?.let { changeImage(it.toLowerCase(), holder.itemView) }
+
         // mini-hack: RV clicks blocked bound fragment change
         holder.participantRV.setOnTouchListener { v, _ ->
             itemClickListener.onItemClicked(dataSet[position])
@@ -59,6 +63,28 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
         }
 
         holder.bind(dataSet[position], itemClickListener)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun changeImage(sport: String, view: View){
+        if (sport.isNullOrBlank()) return
+        val img = view.findViewById<ImageView>(R.id.matchIcon)
+
+        val basketballIcon = view.context.resources.getDrawable(R.drawable.ic_baseline_sports_basketball_24, view.context.theme)
+        val footballIcon = view.context.resources.getDrawable(R.drawable.sports_soccer, view.context.theme)
+        val sportsIcon = view.context.resources.getDrawable(R.drawable.sports, view.context.theme)
+        val mmaIcon = view.context.resources.getDrawable(R.drawable.sports_mma, view.context.theme)
+        val runningIcon = view.context.resources.getDrawable(R.drawable.sports_running, view.context.theme)
+        val tennisIcon = view.context.resources.getDrawable(R.drawable.sports_tennis, view.context.theme)
+        val volleyballIcon = view.context.resources.getDrawable(R.drawable.sports_volleyball, view.context.theme)
+
+        if (sport.contains("basket") || sport == "nba") img.setImageDrawable(basketballIcon)
+        else if( sport == "football" || sport == "soccer") img.setImageDrawable(footballIcon)
+        else if( sport == "mma" || sport == "box") img.setImageDrawable(mmaIcon)
+        else if( sport == "running" || sport == "sprint" || sport == "marathon") img.setImageDrawable(runningIcon)
+        else if( sport == "tennis") img.setImageDrawable(tennisIcon)
+        else if( sport.contains("volley")) img.setImageDrawable(volleyballIcon)
+        else  img.setImageDrawable(sportsIcon)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
