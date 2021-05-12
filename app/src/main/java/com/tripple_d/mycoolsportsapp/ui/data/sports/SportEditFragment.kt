@@ -162,7 +162,7 @@ class SportEditFragment : Fragment() {
         val sportCompetitors =
             sportView?.findViewById<TextView>(R.id.tvSportEditParticipants).text.toString().toInt()
 
-        val competitorNumber: Int = if (sportType == "single")
+        val competitorNumber: Int = if (sportType == "team")
             2
         else
             sportCompetitors
