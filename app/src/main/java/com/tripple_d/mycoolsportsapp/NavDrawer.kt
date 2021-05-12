@@ -52,7 +52,6 @@ class NavDrawer : AppCompatActivity() {
 
         createNotificationChannel()
 
-        this.deleteDatabase("cool-db")
         room_db = Room.databaseBuilder(applicationContext, CoolDatabase::class.java, "cool-db").allowMainThreadQueries().build()
 
         if(room_db.sportDao().getAll().isEmpty()){
