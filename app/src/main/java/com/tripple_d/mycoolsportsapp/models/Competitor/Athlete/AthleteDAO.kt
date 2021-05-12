@@ -1,10 +1,8 @@
 package com.tripple_d.mycoolsportsapp.models.AthleteDAO
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
 import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
+import com.tripple_d.mycoolsportsapp.models.Sport
 
 @Dao
 interface AthleteDao {
@@ -22,6 +20,9 @@ interface AthleteDao {
 
     @Insert
     fun insertAll(vararg athletes: Athlete)
+
+    @Update
+    fun update (vararg athlete: Athlete)
 
     @Delete
     fun delete(athlete: Athlete)

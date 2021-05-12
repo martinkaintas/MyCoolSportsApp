@@ -1,6 +1,5 @@
 package com.tripple_d.mycoolsportsapp.ui.data
 
-import TeamsFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import com.tripple_d.mycoolsportsapp.ui.data.matches.MatchesFragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.tripple_d.mycoolsportsapp.ui.data.sports.SportsFragment
+import com.tripple_d.mycoolsportsapp.ui.data.teams.TeamsFragment
 
 class DataFragment : Fragment() {
 

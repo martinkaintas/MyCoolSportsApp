@@ -36,7 +36,7 @@
         android:text="ΕΙΔΟΣ" />
 
     <Spinner
-        android:id="@+id/spSportType"
+        android:id="@+id/spAthleteSport"
         style="@style/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportEditTypeLabel" />
@@ -47,24 +47,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportType"
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteSport"
         android:text="ΦΥΛΟ" />
 
     <Spinner
-        android:id="@+id/spSportGender"
+        android:id="@+id/spAthleteYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
 
     <Button
-        android:id="@+id/btEditSport"
+        android:id="@+id/btEditAthlete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="ΑΠΟΘΗΚΕΥΣΗ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteYear" />
 
     <Button
         android:id="@+id/btCancelSport"
@@ -74,6 +74,6 @@
         android:text="ΑΚΥΡΩΣΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

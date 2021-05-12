@@ -8,9 +8,11 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Sport(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "name") val name: String?,
+    @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "sex") val sex: String,
     @ColumnInfo(name = "total_competitors") val total_competitors: Int,
-): Parcelable
+): Parcelable {
+    override fun toString(): String = name
+}
 

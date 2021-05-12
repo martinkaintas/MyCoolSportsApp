@@ -52,7 +52,7 @@ class HomeFragment : Fragment(),IItemClickListener {
                     for (participation in match.get("participants") as ArrayList<HashMap<String,String>>){
                         val competitor: Competitor
                         //Todo: find a better way in order to improve performance (sorry, burnout)
-                        competitor = if(sport.type=="group")
+                        competitor = if(sport.type=="team")
                             mainActivity.room_db.teamDao().get(participation["id"] as Long)
                         else
                             mainActivity.room_db.athleteDao().get(participation["id"] as Long)
