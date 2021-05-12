@@ -48,11 +48,15 @@ class MatchListAdapter(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun formatTitle(match:Match):String{
+        val names = match.participations.map{participation->
+            if(participation.competitor.name.length>10)
+                participation.competitor.name.substring(0,10)+"."
+            else participation.competitor.name}
         var title = "${match.sport.name} | "
         title += if(match.sport.total_competitors==2)
-            "${match.participations[0].competitor.name} vs ${match.participations[1].competitor.name}"
+            "${names[0]} vs ${names[1]}"
         else
-            "${match.participations[0].competitor.name} vs ${match.sport.total_competitors-1}"
+            "${names[0]} vs ${match.sport.total_competitors-1}"
         title+= ", "+match.date.format(DateTimeFormatter.ofPattern("dd/MM"))
 
         return title
