@@ -45,12 +45,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSportTypeLabel" />
 
     <TextView
-        android:id="@+id/tvSportGenderLabel"
+        android:id="@+id/tvSportParticipantsLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportType"
+        android:text="ΑΡΙΘΜΟΣ ΣΥΜΜΕΤΕΧΟΝΤΩΝ" />
+
+    <TextView
+        android:id="@+id/tvSportParticipants"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportParticipantsLabel" />
+
+
+    <TextView
+        android:id="@+id/tvSportGenderLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportParticipants"
         android:text="ΦΥΛΟ" />
 
     <TextView

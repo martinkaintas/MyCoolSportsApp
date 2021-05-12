@@ -41,9 +41,18 @@ class SportInfoFragment : Fragment() {
         val sportType = sportView?.findViewById<TextView>(R.id.tvSportType)
         sportType?.text = sport.type.capitalize()
 
+        val sportParticipantNumber = sportView?.findViewById<TextView>(R.id.tvSportParticipants)
+        sportParticipantNumber?.text = sport.total_competitors.toString()
+
+        if (sport.type == "team") {
+            sportParticipantNumber.visibility = View.GONE
+            sportView?.findViewById<TextView>(R.id.tvSportParticipantsLabel).visibility = View.GONE
+        }
+
         val sportGender = sportView?.findViewById<TextView>(R.id.tvSportGender)
         sportGender?.text = sport.sex.capitalize()
     }
+
 
     private fun deleteSport(sportView: View, sport: Sport) {
         mainActivity.room_db.sportDao().delete(sport)
