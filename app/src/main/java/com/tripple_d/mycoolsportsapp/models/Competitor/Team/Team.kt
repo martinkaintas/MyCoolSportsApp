@@ -20,3 +20,4 @@ data class Team(
 ) : Competitor(id, name, city_id, sport_id), Parcelable {
     override fun toString(): String = name
 }
+

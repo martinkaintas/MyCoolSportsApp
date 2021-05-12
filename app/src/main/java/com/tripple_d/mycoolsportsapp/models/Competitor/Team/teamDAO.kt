@@ -10,6 +10,12 @@ interface TeamDao {
     @Query("SELECT * FROM team")
     fun getAll(): List<Team>
 
+    @Query("SELECT * FROM team where sport_id==:sport_id")
+    fun getBySport(sport_id:Long): List<Team>
+
+    @Query("SELECT * FROM team WHERE name IN (:teamNames)")
+    fun getByNames(teamNames: List<String>): List<Team>
+
     @Query("SELECT * FROM team WHERE id IN (:teamIds)")
     fun loadAllByIds(teamIds: IntArray): List<Team>
 

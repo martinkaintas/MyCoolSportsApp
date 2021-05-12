@@ -56,7 +56,6 @@ class MatchAdapter(private val dataSet: MutableList<Match>, private val itemClic
 
         dataSet[position].sport.name?.let { changeImage(it.toLowerCase(), holder.itemView) }
 
-        // mini-hack: RV clicks blocked bound fragment change
         holder.participantRV.setOnTouchListener { v, _ ->
             itemClickListener.onItemClicked(dataSet[position])
             return@setOnTouchListener true
