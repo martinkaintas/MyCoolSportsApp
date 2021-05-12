@@ -1,8 +1,6 @@
 package com.tripple_d.mycoolsportsapp.models.Competitor.Team
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import com.tripple_d.mycoolsportsapp.models.Sport
 
 @Dao
 interface TeamDao {
@@ -26,6 +24,9 @@ interface TeamDao {
 
     @Insert
     fun insertAll(vararg teams: Team)
+
+    @Update
+    fun update (vararg team: Team)
 
     @Delete
     fun delete(team: Team)

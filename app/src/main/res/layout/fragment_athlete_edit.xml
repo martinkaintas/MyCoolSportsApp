@@ -14,39 +14,29 @@
         android:layout_height="wrap_content"
         android:text="ονομα"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMatchSport"
         />
 
     <EditText
-        android:id="@+id/tvSportName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="TAKIS"
-        android:inputType="none"
-        android:text="TAKIS"
+        android:id="@+id/etAthleteName"
+        style="@style/editText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportNameLabel"
-        tools:ignore="InvalidId"
-        tools:text="TAKIS" />
+        tools:ignore="InvalidId" />
 
     <TextView
         android:id="@+id/tvAthleteSurnameLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSportName"
-        tools:text="ΕΠΩΝΥΜΟ" />
+        app:layout_constraintTop_toBottomOf="@+id/etAthleteName"
+        android:text="ΕΠΩΝΥΜΟ" />
 
     <EditText
-        android:id="@+id/tvAthleteSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
+        android:id="@+id/etAthleteSurname"
+        style="@style/editText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAthleteSurnameLabel"
-        android:inputType="none"
         tools:ignore="InvalidId" />
 
     <TextView
@@ -54,39 +44,15 @@
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteSurname"
-        tools:text="ΠΟΛΗ (ΕΔΡΑ)" />
+        app:layout_constraintTop_toBottomOf="@+id/etAthleteSurname"
+        android:text="ΠΟΛΗ (ΕΔΡΑ)" />
 
-    <EditText
-        android:id="@+id/tvAthleteCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
+    <Spinner
+        android:id="@+id/spAthleteCity"
+        style="@style/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAthleteCityLabel"
-        android:inputType="none"
-        tools:ignore="InvalidId" />
-
-    <TextView
-        android:id="@+id/tvAthleteCountryLabel"
-        style="@style/matchDetails__title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteCity"
-        tools:text="ΧΩΡΑ" />
-
-    <EditText
-        android:id="@+id/tvAthleteCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteCountryLabel"
-        android:inputType="none"
         tools:ignore="InvalidId" />
 
     <TextView
@@ -94,15 +60,13 @@
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteCountry"
-        tools:text="ΑΘΛΗΜΑ" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteCity"
+        android:text="ΑΘΛΗΜΑ" />
 
     <Spinner
-        android:id="@+id/spSportType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/spAthleteSport"
+        style="@style/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportEditTypeLabel" />
 
@@ -111,35 +75,50 @@
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
+        android:text="ΕΤΟΣ ΓΕΝΝΗΣΗΣ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportType"
-        tools:text="ΕΤΟΣ ΓΕΝΝΗΣΗΣ" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteSport" />
 
-    <Spinner
-        android:id="@+id/spSportGender"
+    <TextView
+        android:id="@+id/tvAthleteYear"
+        style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="1990"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
 
-    <Button
-        android:id="@+id/btEditSport"
+    <ImageButton
+        android:id="@+id/btAthleteYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:tint="@color/teal_700"
+        app:layout_constraintStart_toEndOf="@+id/tvAthleteYear"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <Button
-        android:id="@+id/btDeleteSport"
+        android:id="@+id/btSaveAthlete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="ΔΙΑΓΡΑΦΗ"
+        android:text="ΑΠΟΘΗΚΕΥΣΗ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAthleteYear" />
+
+    <Button
+        android:id="@+id/btCancelAthlete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="ΑΚΥΡΩΣΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAthleteYear" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

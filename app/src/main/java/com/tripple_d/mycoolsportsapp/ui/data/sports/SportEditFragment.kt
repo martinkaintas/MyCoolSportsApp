@@ -12,6 +12,8 @@ import androidx.navigation.findNavController
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Sport
+import com.whiteelephant.monthpicker.MonthPickerDialog
+import java.util.*
 
 class SportEditFragment : Fragment() {
     private lateinit var mainActivity: NavDrawer
@@ -23,7 +25,8 @@ class SportEditFragment : Fragment() {
         mainActivity = activity as NavDrawer
 
         val sportView = inflater.inflate(R.layout.fragment_sport_edit, container, false)
-        var selectedSportId : Long = -1
+        var selectedSportId: Long = -1
+
         setFormOptions(sportView)
 
         if (arguments?.getParcelable<Sport>("sport") != null) {
@@ -31,13 +34,30 @@ class SportEditFragment : Fragment() {
             selectedSportId = sport.id
             setSportInfo(sportView, sport)
         }
-        else {
-        }
 
+        sportView?.findViewById<ImageButton>(R.id.btSportParticipants)
+            ?.setOnClickListener { showParticipantPicker(sportView) }
         sportView?.findViewById<Button>(R.id.btCancelSport)
             ?.setOnClickListener { cancelEdit(sportView) }
-        sportView?.findViewById<Button>(R.id.btEditSport)
+        sportView?.findViewById<Button>(R.id.btEditAthlete)
             ?.setOnClickListener { onSubmit(sportView, selectedSportId) }
+
+        val sportTypeSpinner = sportView?.findViewById<Spinner>(R.id.spSportType)
+        sportTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                toggleParticipantSelectorVisibility(
+                    sportView,
+                    parent?.getItemAtPosition(position).toString().toLowerCase()
+                )
+            }
+
+        }
 
         return sportView
     }
@@ -89,16 +109,39 @@ class SportEditFragment : Fragment() {
     }
 
 
-    private fun onSubmit(sportView: View, selectedSportId: Long) {
-        if (selectedSportId < 0) {
-            createSport(sportView)
-        }
-        else{
-            updateSport(sportView, selectedSportId)
+    private fun toggleParticipantSelectorVisibility(sportView: View, selectedSportType: String) {
+        val participantsTextView = sportView?.findViewById<TextView>(R.id.tvSportEditParticipants)
+        val participantsButton = sportView?.findViewById<ImageButton>(R.id.btSportParticipants)
+        val participantsLabel = sportView?.findViewById<TextView>(R.id.tvSportEditParticipantsLabel)
+        if (selectedSportType == "team") {
+            participantsTextView.visibility = View.GONE
+            participantsButton.visibility = View.GONE
+            participantsLabel.visibility = View.GONE
+        } else {
+            participantsTextView.visibility = View.VISIBLE
+            participantsButton.visibility = View.VISIBLE
+            participantsLabel.visibility = View.VISIBLE
         }
     }
 
-    private fun createSport(sportView: View) {
+
+    private fun showParticipantPicker(sportView: View) {
+        val participantsTextView = sportView?.findViewById<TextView>(R.id.tvSportEditParticipants)
+        val builder = MonthPickerDialog.Builder(
+            activity,
+            { _: Int, year: Int ->
+                participantsTextView.text = year.toString()
+            },
+            Calendar.YEAR,
+            Calendar.MONTH
+        )
+        builder.showYearOnly().setYearRange(1, 8).setActivatedYear(2)
+            .setTitle("Επιλογή αριθμού συμμετεχόντων").build()
+            .show()
+    }
+
+
+    private fun onSubmit(sportView: View, selectedSportId: Long) {
         val sportNameEditText = sportView?.findViewById<EditText>(R.id.etSportName)
         val sportName = sportView?.findViewById<EditText>(R.id.etSportName).text.toString()
         if (sportName == "") {
@@ -116,10 +159,27 @@ class SportEditFragment : Fragment() {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(sportView.windowToken, 0)
 
-        // Add the sport to the database
-        mainActivity.room_db.sportDao().insertAll(
-            Sport(0, sportName, sportType, sportGender,2)
-        )
+        val sportCompetitors =
+            sportView?.findViewById<TextView>(R.id.tvSportEditParticipants).text.toString().toInt()
+
+        val competitorNumber: Int = if (sportType == "single")
+            2
+        else
+            sportCompetitors
+
+        if (selectedSportId < 0) {
+            val newSport = Sport(0, sportName, sportType, sportGender, competitorNumber)
+            createSport(sportView, newSport)
+        } else {
+            val newSport =
+                Sport(selectedSportId, sportName, sportType, sportGender, competitorNumber)
+            updateSport(sportView, newSport)
+        }
+    }
+
+
+    private fun createSport(sportView: View, newSport: Sport) {
+        mainActivity.room_db.sportDao().insertAll(newSport)
 
         // Show success message
         val successMessage = "Το άθλημα δημιουργήθηκε επιτυχώς!"
@@ -133,28 +193,9 @@ class SportEditFragment : Fragment() {
     }
 
 
-    private fun updateSport(sportView: View, selectedSportId: Long) {
-        val sportNameEditText = sportView?.findViewById<EditText>(R.id.etSportName)
-        val sportName = sportView?.findViewById<EditText>(R.id.etSportName).text.toString()
-        if (sportName == "") {
-            sportNameEditText.error = "Πρέπει να δωθεί όνομα αθλήματος!"
-            return
-        }
+    private fun updateSport(sportView: View, newSport: Sport) {
+        mainActivity.room_db.sportDao().update(newSport)
 
-        val sportType =
-            sportView?.findViewById<Spinner>(R.id.spSportType).selectedItem.toString().toLowerCase()
-        val sportGender =
-            sportView?.findViewById<Spinner>(R.id.spSportGender).selectedItem.toString()
-                .toLowerCase()
-
-        // Close on screen keyboard
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(sportView.windowToken, 0)
-
-        // Add the sport to the database
-        mainActivity.room_db.sportDao().update(
-            Sport(selectedSportId, sportName, sportType, sportGender,2  )
-        )
         // Show success message
         val successMessage = "Το άθλημα ανανεώθηκε επιτυχώς!"
         val duration = Toast.LENGTH_SHORT

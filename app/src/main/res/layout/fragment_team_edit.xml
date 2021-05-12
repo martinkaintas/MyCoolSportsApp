@@ -30,19 +30,15 @@
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTeamName"
-        tools:text="ΟΝΟΜΑ ΓΗΠΕΔΟΥ" />
+        android:text="ΟΝΟΜΑ ΓΗΠΕΔΟΥ" />
 
     <EditText
-        android:id="@+id/etTeamSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
+        android:id="@+id/etTeamStadium"
+        style="@style/editText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTeamStadiumLabel"
-        android:inputType="none"
         tools:ignore="InvalidId" />
 
     <TextView
@@ -50,92 +46,81 @@
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTeamSurname"
-        tools:text="ΠΟΛΗ (ΕΔΡΑ)" />
+        app:layout_constraintTop_toBottomOf="@+id/etTeamStadium"
+        android:text="ΠΟΛΗ (ΕΔΡΑ)" />
 
-    <EditText
-        android:id="@+id/etTeamCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
+    <Spinner
+        android:id="@+id/spTeamCity"
+        style="@style/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTeamCityLabel"
         android:inputType="none"
         tools:ignore="InvalidId" />
 
-    <TextView
-        android:id="@+id/tvTeamCountryLabel"
-        style="@style/matchDetails__title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTeamCity"
-        tools:text="ΧΩΡΑ" />
-
-    <EditText
-        android:id="@+id/etTeamCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TAKIS"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamCountryLabel"
-        android:inputType="none"
-        tools:ignore="InvalidId" />
 
     <TextView
         android:id="@+id/tvTeamSportLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTeamCountry"
-        tools:text="ΑΘΛΗΜΑ" />
+        app:layout_constraintTop_toBottomOf="@+id/spTeamCity"
+        android:text="ΑΘΛΗΜΑ" />
 
     <Spinner
-        android:id="@+id/spTeamType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/spTeamSport"
+        style="@style/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTeamSportLabel" />
 
     <TextView
-        android:id="@+id/tvTeamBirthYearLabel"
+        android:id="@+id/tvTeamYearLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/matchDetails__date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spTeamType"
-        tools:text="ΕΤΟΣ ΙΔΡΥΣΗΣ" />
+        app:layout_constraintTop_toBottomOf="@+id/spTeamSport"
+        android:text="ΕΤΟΣ ΙΔΡΥΣΗΣ" />
 
-    <Spinner
-        android:id="@+id/spTeamBirthYear"
+    <TextView
+        android:id="@+id/tvTeamYear"
+        style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="1990"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYearLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYearLabel" />
+
+    <ImageButton
+        android:id="@+id/btTeamYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:tint="@color/teal_700"
+        app:layout_constraintStart_toEndOf="@+id/tvTeamYear"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYearLabel"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <Button
-        android:id="@+id/btEditTeam"
+        android:id="@+id/btSaveTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
+        android:text="ΑΠΟΘΗΚΕΥΣΗ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spTeamBirthYear" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYear" />
 
     <Button
-        android:id="@+id/btDeleteTeam"
+        android:id="@+id/btCancelTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="ΔΙΑΓΡΑΦΗ"
+        android:text="ΑΚΥΡΩΣΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spTeamBirthYear" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

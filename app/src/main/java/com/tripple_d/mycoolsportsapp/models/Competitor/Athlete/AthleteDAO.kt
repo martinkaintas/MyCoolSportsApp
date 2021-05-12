@@ -1,10 +1,10 @@
 package com.tripple_d.mycoolsportsapp.models.AthleteDAO
+import androidx.room.*
+import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
-import com.tripple_d.mycoolsportsapp.ui.data.matches.MatchEditFragment
 
 @Dao
 interface AthleteDao {
@@ -28,6 +28,9 @@ interface AthleteDao {
 
     @Insert
     fun insertAll(vararg athletes: Athlete)
+
+    @Update
+    fun update (vararg athlete: Athlete)
 
     @Delete
     fun delete(athlete: Athlete)

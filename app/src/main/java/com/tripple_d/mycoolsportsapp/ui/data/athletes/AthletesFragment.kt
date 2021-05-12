@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
 
@@ -22,14 +24,22 @@ class AthletesFragment : Fragment() {
     ): View? {
         dataViewModel =
             ViewModelProvider(this).get(AthleteViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_athletes, container, false)
-        val recyclerView = root.findViewById<RecyclerView>(R.id.rvAthletes)
+        val athletesView = inflater.inflate(R.layout.fragment_athletes, container, false)
+        val recyclerView = athletesView.findViewById<RecyclerView>(R.id.rvAthletes)
+
+        athletesView?.findViewById<FloatingActionButton>(R.id.fabAddAthlete)
+            ?.setOnClickListener { navigateToAddAthlete(athletesView) }
         
         mainActivity = activity as NavDrawer
         val athletes = mainActivity.room_db.athleteDao().getAll().toMutableList()
         recyclerView.apply {
             adapter = AthleteListAdapter(athletes)
         }
-        return root
+        return athletesView
+    }
+
+    private fun navigateToAddAthlete(athletesView: View) {
+        Navigation.findNavController(athletesView)
+            .navigate(R.id.action_dataFragment_to_athleteEditFragment, null)
     }
 }

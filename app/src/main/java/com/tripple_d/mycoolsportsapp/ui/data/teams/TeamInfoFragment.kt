@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
@@ -23,8 +24,12 @@ class TeamInfoFragment(): Fragment() {
         mainActivity = activity as NavDrawer
         val team: Team = arguments?.getParcelable<Team>("team") as Team
         val teamView = inflater.inflate(R.layout.fragment_team_info, container, false)
+
+        teamView?.findViewById<Button>(R.id.btEditTeam)
+            ?.setOnClickListener { navigateToEditTeam(teamView, team) }
         teamView?.findViewById<Button>(R.id.btDeleteTeam)
             ?.setOnClickListener { deleteTeam(teamView, team) }
+
         setTeamInfo(teamView, team)
         return teamView
     }
@@ -37,7 +42,7 @@ class TeamInfoFragment(): Fragment() {
         val teamStadium = teamView?.findViewById<TextView>(R.id.tvTeamStadium)
         teamStadium?.text = team.field_name
 
-        val teamYear = teamView?.findViewById<TextView>(R.id.tvTeamBirthYear)
+        val teamYear = teamView?.findViewById<TextView>(R.id.tvTeamYear)
         teamYear?.text = team.creation_year.toString()
 
         val cityModel = mainActivity.room_db.cityDao().get(team.city_id)
@@ -51,8 +56,21 @@ class TeamInfoFragment(): Fragment() {
         teamSport?.text = sportModel.name
     }
 
+
+    private fun navigateToEditTeam(teamView: View, team: Team) {
+        val bundle = Bundle()
+        bundle.putParcelable("team", team)
+        teamView.findNavController()
+            .navigate(R.id.action_teamInfoFragment_to_teamEditFragment, bundle)
+    }
+
+
     private fun deleteTeam(teamView: View, team: Team) {
         mainActivity.room_db.teamDao().delete(team)
+        val successMessage = "Η ομάδα διαγράφηκε επιτυχώς!"
+        val duration = Toast.LENGTH_SHORT
+        val toast = Toast.makeText(activity, successMessage, duration)
+        toast.show()
         teamView.findNavController()
             .navigate(R.id.action_teamInfoFragment_to_dataFragment, null)
     }

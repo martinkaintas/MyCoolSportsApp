@@ -17,7 +17,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tvSportName"
+        android:id="@+id/etAthleteName"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,11 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSportName"
+        app:layout_constraintTop_toBottomOf="@+id/etAthleteName"
         android:text="επωνυμο" />
 
     <TextView
-        android:id="@+id/tvAthleteSurname"
+        android:id="@+id/etAthleteSurname"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,11 +52,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteSurname"
+        app:layout_constraintTop_toBottomOf="@+id/etAthleteSurname"
         android:text="ΠΟΛΗ (ΕΔΡΑ)" />
 
     <TextView
-        android:id="@+id/tvAthleteCity"
+        android:id="@+id/spAthleteCity"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,10 +72,10 @@
         android:layout_height="wrap_content"
         android:text="χωρα"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteCity" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteCity" />
 
     <TextView
-        android:id="@+id/tvAthleteCountry"
+        android:id="@+id/etAthleteCountry"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,10 +92,10 @@
         android:layout_height="wrap_content"
         android:text="αθλημα"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAthleteCountry" />
+        app:layout_constraintTop_toBottomOf="@+id/etAthleteCountry" />
 
     <TextView
-        android:id="@+id/spSportType"
+        android:id="@+id/spAthleteSport"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,11 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportType"
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteSport"
         android:text="ΕΤΟΣ ΓΕΝΝΗΣΗΣ" />
 
     <TextView
-        android:id="@+id/spSportGender"
+        android:id="@+id/spAthleteYear"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,22 +120,22 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
 
     <Button
-        android:id="@+id/btEditSport"
+        android:id="@+id/btEditAthlete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteYear" />
 
     <Button
-        android:id="@+id/btDeleteSport"
+        android:id="@+id/btDeleteAthlete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="ΔΙΑΓΡΑΦΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spAthleteYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

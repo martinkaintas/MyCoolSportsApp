@@ -1,6 +1,5 @@
 package com.tripple_d.mycoolsportsapp
 
-
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,6 +8,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -16,9 +18,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.room.Room
@@ -35,6 +34,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+
 
 class NavDrawer : AppCompatActivity() {
 
@@ -53,50 +53,56 @@ class NavDrawer : AppCompatActivity() {
         createNotificationChannel()
 
         this.deleteDatabase("cool-db")
-        room_db = Room.databaseBuilder(applicationContext,CoolDatabase::class.java,"cool-db").allowMainThreadQueries().build()
+        room_db = Room.databaseBuilder(applicationContext, CoolDatabase::class.java, "cool-db").allowMainThreadQueries().build()
 
         if(room_db.sportDao().getAll().isEmpty()){
             room_db.sportDao().insertAll(
-                Sport(0,"NBA", "team", "male",2),
-                Sport(0,"Tennis", "single", "female",2)
+                Sport(0, "NBA", "team", "male", 2),
+                Sport(0, "Tennis", "single", "female", 2)
             )
         }
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
-                City(0,"Thessaloniki", "Greece",69.0,69.0,),
-                City(0,"El Basan", "Yes",99.0,99.0,),
+                City(0, "Thessaloniki", "Greece", 69.0, 69.0),
+                City(0, "El Basan", "Yes", 99.0, 99.0),
             )
         }
 
         if(room_db.teamDao().getAll().isEmpty()){
             room_db.teamDao().insertAll(
-                Team(0,
+                Team(
+                    0,
                     1,
-                    1,"PAOKARA","KAFKATZOGLEO",1969
+                    1, "PAOKARA", "KAFKATZOGLEO", 1969
                 ),
-                Team(0,
+                Team(
+                    0,
                     2,
-                    1,"Ethniki TEI","TEI",1969
+                    1, "Ethniki TEI", "TEI", 1969
                 )
             )
         }
         if(room_db.athleteDao().getAll().isEmpty()){
             room_db.athleteDao().insertAll(
-                Athlete(0,"Pipis","Pipou",
-                   1,
-                    1,1969
-                ),
-                Athlete(0,"Sifis","SIfou",
+                Athlete(
+                    0, "Pipis", "Pipou",
                     1,
-                    1,1969
+                    2, 1969
                 ),
-                Athlete(0,"Pipa","Pipou",
+                Athlete(
+                    0, "Sifis", "SIfou",
                     1,
-                    2,1942
+                    2, 1969
                 ),
-                Athlete(0,"Sofoklia","SIfou",
+                Athlete(
+                    0, "Pipa", "Pipou",
+                    1,
+                    2, 1942
+                ),
+                Athlete(
+                    0, "Sofoklia", "SIfou",
                     2,
-                    2,1945
+                    2, 1945
                 ),
             )
         }
@@ -148,6 +154,7 @@ class NavDrawer : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchMatches(callback: ((MutableList<Match>) -> Unit)? = null) {
@@ -272,5 +279,4 @@ class NavDrawer : AppCompatActivity() {
         var calendarDate = date.format(formatter)
         return day + " " + calendarDate
     }
-
 }

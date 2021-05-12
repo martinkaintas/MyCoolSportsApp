@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
@@ -28,24 +29,37 @@ class SportInfoFragment : Fragment() {
             ?.setOnClickListener { deleteSport(sportInfoView, sport) }
         sportInfoView?.findViewById<Button>(R.id.btEditSport)
             ?.setOnClickListener { editSport(sportInfoView, sport) }
-        setAthleteInfo(sportInfoView, sport)
+        setSportInfo(sportInfoView, sport)
         return sportInfoView
     }
 
 
-    private fun setAthleteInfo(athleteView: View, sport: Sport) {
-        val athleteName = athleteView?.findViewById<TextView>(R.id.tvSportName)
-        athleteName?.text = sport.name
+    private fun setSportInfo(sportView: View, sport: Sport) {
+        val sportName = sportView?.findViewById<TextView>(R.id.tvSportName)
+        sportName?.text = sport.name
 
-        val athleteSurname = athleteView?.findViewById<TextView>(R.id.spSportType)
-        athleteSurname?.text = sport.type.capitalize()
+        val sportType = sportView?.findViewById<TextView>(R.id.tvSportType)
+        sportType?.text = sport.type.capitalize()
 
-        val athleteBirthYear = athleteView?.findViewById<TextView>(R.id.spSportGender)
-        athleteBirthYear?.text = sport.sex.capitalize()
+        val sportParticipantNumber = sportView?.findViewById<TextView>(R.id.tvSportParticipants)
+        sportParticipantNumber?.text = sport.total_competitors.toString()
+
+        if (sport.type == "team") {
+            sportParticipantNumber.visibility = View.GONE
+            sportView?.findViewById<TextView>(R.id.tvSportParticipantsLabel).visibility = View.GONE
+        }
+
+        val sportGender = sportView?.findViewById<TextView>(R.id.tvSportGender)
+        sportGender?.text = sport.sex.capitalize()
     }
+
 
     private fun deleteSport(sportView: View, sport: Sport) {
         mainActivity.room_db.sportDao().delete(sport)
+        val successMessage = "Το άθλημα διαγράφηκε επιτυχώς!"
+        val duration = Toast.LENGTH_SHORT
+        val toast = Toast.makeText(activity, successMessage, duration)
+        toast.show()
         sportView.findNavController()
             .navigate(R.id.action_sportInfoFragment_to_dataFragment, null)
     }

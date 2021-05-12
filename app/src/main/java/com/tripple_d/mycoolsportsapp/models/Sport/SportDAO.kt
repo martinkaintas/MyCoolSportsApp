@@ -20,6 +20,7 @@ interface SportDao {
     @Query("SELECT * FROM sport WHERE name LIKE :name")
     fun findByName(name: String): Sport
 
+
     @Insert
     fun insertAll(vararg sports: Sport)
 

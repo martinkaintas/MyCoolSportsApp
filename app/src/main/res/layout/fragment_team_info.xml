@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTeamSportLabel" />
 
     <TextView
-        android:id="@+id/tvTeamBirthYearLabel"
+        android:id="@+id/tvTeamYearLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,12 +109,12 @@
         android:text="ΕΤΟΣ ΙΔΡΥΣΗΣ" />
 
     <TextView
-        android:id="@+id/tvTeamBirthYear"
+        android:id="@+id/tvTeamYear"
         style="@style/matchDetails__text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYearLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYearLabel" />
 
     <Button
         android:id="@+id/btEditTeam"
@@ -123,7 +123,7 @@
         android:layout_marginTop="40dp"
         android:text="ΕΠΕΞΕΡΓΑΣΙΑ"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYear" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYear" />
 
     <Button
         android:id="@+id/btDeleteTeam"
@@ -133,6 +133,6 @@
         android:text="ΔΙΑΓΡΑΦΗ"
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamBirthYear" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

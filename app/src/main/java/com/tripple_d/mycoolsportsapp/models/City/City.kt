@@ -16,4 +16,6 @@ data class City(
     @ColumnInfo(name = "country") val country:String,
     @ColumnInfo(name = "lng") val lng:Double,
     @ColumnInfo(name = "lat") val lat:Double,
-):Parcelable
+):Parcelable {
+    override fun toString(): String = name
+}

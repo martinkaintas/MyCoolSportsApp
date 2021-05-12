@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:text="ονομα"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMatchSport"
         />
 
     <EditText
@@ -41,13 +40,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSportEditTypeLabel" />
 
+
+    <TextView
+        android:id="@+id/tvSportEditParticipantsLabel"
+        android:visibility="gone"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spSportType"
+        android:text="ΑΡΙΘΜΟΣ ΣΥΜΜΕΤΕΧΟΝΤΩΝ" />
+
+    <TextView
+        android:id="@+id/tvSportEditParticipants"
+        android:visibility="gone"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportEditParticipantsLabel"
+        android:text="2" />
+
+    <ImageButton
+        android:id="@+id/btSportParticipants"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:tint="@color/teal_700"
+        app:layout_constraintStart_toEndOf="@+id/tvSportEditParticipants"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportEditParticipantsLabel"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+
     <TextView
         android:id="@+id/tvSportGenderLabel"
         style="@style/matchDetails__title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSportType"
+        app:layout_constraintTop_toBottomOf="@+id/btSportParticipants"
         android:text="ΦΥΛΟ" />
 
     <Spinner
@@ -58,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSportGenderLabel" />
 
     <Button
-        android:id="@+id/btEditSport"
+        android:id="@+id/btEditAthlete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
