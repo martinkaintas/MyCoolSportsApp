@@ -219,6 +219,11 @@ class MultiSelectSpinner : androidx.appcompat.widget.AppCompatSpinner, OnMultiCh
             }
         }
 
+        if(!foundOne) {
+            _proxyAdapter.clear()
+            _proxyAdapter.add("${_items?.size} Επιλογές")
+        }
+
         return sb.toString()
     }
 }

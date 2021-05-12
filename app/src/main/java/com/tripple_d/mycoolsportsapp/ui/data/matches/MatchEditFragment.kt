@@ -3,6 +3,7 @@ package com.tripple_d.mycoolsportsapp.ui.data.matches
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class MatchEditFragment : Fragment() {
     private lateinit var competitorSpinner: MultiSelectSpinner
     private lateinit var dPicker: DatePicker
     private lateinit var matchView: View
+    private var shouldReset: Boolean= false
 
 
 
@@ -66,6 +68,11 @@ class MatchEditFragment : Fragment() {
         //disable if no competitors are selected
         matchView?.findViewById<Spinner>(R.id.spAdminPlace).isEnabled = false
 
+        this.context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item,sportTitleArray) }.also {
+                adapter ->
+            adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            sportSpinner.adapter = adapter
+        }
 
         if(match!=null) {
             val chosenSportIndex = match!!.let { sportArray.indexOf(it.sport) }
@@ -92,12 +99,6 @@ class MatchEditFragment : Fragment() {
             dPicker.updateDate(match!!.date.year,match!!.date.month.value,match!!.date.dayOfMonth)
         }
 
-        this.context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item,sportTitleArray) }.also {
-                adapter ->
-            adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            sportSpinner.adapter = adapter
-        }
-
 
 
 
@@ -106,16 +107,20 @@ class MatchEditFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (match==null || shouldReset)
+                {
+                    shouldReset = false
+                    resetForm(sportArray[position])
+                }
+                shouldReset = true
+
                 val chosenSport = sportArray[position]
                 competitors =
                     if(chosenSport.type=="team") mainActivity.room_db.teamDao().getBySport(chosenSport.id).toMutableList()
                     else mainActivity.room_db.athleteDao().getBySport(chosenSport.id).toMutableList()
-
-                val totalChosenCompetitors = if(match!=null) match!!.participations.size else 0
-                val competitorStatus = matchView.findViewById(R.id.tvAdminCompetitorStatus) as TextView
-                competitorStatus.text = "$totalChosenCompetitors / ${chosenSport.total_competitors}"
                 competitorSpinner.setMaxItems(chosenSport.total_competitors)
-                if(match==null) {
+                if(match==null || chosenSport!=match?.sport) {
                     competitorSpinner.setItemSelectedCallback {
                         competitorCallback(matchView,
                             chosenSport, competitorSpinner.selectedIndicies)
@@ -131,7 +136,6 @@ class MatchEditFragment : Fragment() {
 
     private fun competitorCallback(matchView: View, chosenSport: Sport, choices: List<Int>){
         updateScoreBoard(chosenSport,null )
-
         // Show total selections
         val totalChoices = choices.size
         val competitorStatus = matchView.findViewById(R.id.tvAdminCompetitorStatus) as TextView
@@ -139,10 +143,33 @@ class MatchEditFragment : Fragment() {
 
         // Not enough choices handle
         if(totalChoices<chosenSport.total_competitors)
-            if(totalChoices==0)
-            else competitorStatus.setTextColor(Color.RED)
+            competitorStatus.setTextColor(Color.RED)
+        else competitorStatus.setTextColor(Color.BLACK)
 
         setAvailablePlaces()
+    }
+
+    private fun resetForm(chosenSport: Sport) {
+        competitors =
+            if (chosenSport.type == "team") mainActivity.room_db.teamDao()
+                .getBySport(chosenSport.id).toMutableList()
+            else mainActivity.room_db.athleteDao().getBySport(chosenSport.id).toMutableList()
+
+        competitorSpinner.setItemSelectedCallback {
+            competitorCallback(matchView,
+                chosenSport, competitorSpinner.selectedIndicies)
+        }
+
+        matchView?.findViewById<TextView>(R.id.tvAdminCompetitorStatus).text = "0 / ${chosenSport.total_competitors}"
+
+        matchView?.findViewById<Spinner>(R.id.spAdminPlace).isEnabled = false
+
+        competitorSpinner.setItems(competitors.map { competitor -> competitor.name })
+        competitorSpinner.setSelection(intArrayOf())
+        setAvailablePlaces()
+
+        updateScoreBoard(chosenSport, mutableListOf<Participation>())
+        dPicker.updateDate(2020,10,10)
     }
 
 
