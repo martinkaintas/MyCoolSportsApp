@@ -3,7 +3,9 @@ package com.tripple_d.mycoolsportsapp
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -17,6 +19,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tripple_d.mycoolsportsapp.models.*
@@ -28,6 +32,8 @@ import com.tripple_d.mycoolsportsapp.models.Match.Participation
 import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class NavDrawer : AppCompatActivity() {
@@ -164,18 +170,28 @@ class NavDrawer : AppCompatActivity() {
                         participations.add(Participation(participation["score"] as Long, competitor))
                     }
 
-                    matches.add(
-                        Match(
-                            match.getLong("id"),
-                            LocalDateTime.ofInstant(
-                                Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds.toLong()),
-                                TimeZone.getDefault().toZoneId()),
-                            city,
-                            sport,
-                            participations
-                        )
+                    val date = LocalDateTime.ofInstant(
+                        Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds),
+                        TimeZone.getDefault().toZoneId())
+                    val matchObj = Match(
+                        match.getLong("id"),
+                        date,
+                        city,
+                        sport,
+                        participations
                     )
-
+                    // if match is today
+                    if (LocalDateTime.now().until(date, ChronoUnit.DAYS)
+                            .compareTo(0) == 0 && date.isAfter(LocalDateTime.now())
+                    ) {
+                        showMatchNotification(matchObj,
+                            "${getNotificationTitle(participations)}",
+                            formatDate(date),
+                            getNotificationBigText(date, city, sport, participations))
+                    }
+                    matches.add(
+                        matchObj
+                    )
                 }
 
 
@@ -184,4 +200,77 @@ class NavDrawer : AppCompatActivity() {
                 }
             }
     }
+
+    private fun showMatchNotification(match: Match, title: String = "Title", text: String = "Text", bigText: String = "Big Text") {
+        // Create an explicit intent for an Activity in your app
+        val intent = Intent(this, NavDrawer::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val args = Bundle()
+        args.putParcelable("match",match)
+        intent.putExtra("bundle", args)
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+        val builder = NotificationCompat.Builder(this, this.CHANNEL_ID)
+            .setSmallIcon(R.drawable.bell)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            // Set the intent that will fire when the user taps the notification
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(notificationId, builder.build())
+            notificationId ++
+        }
+
+    }
+
+    private  fun getNotificationTitle(participations: MutableList<Participation>):String{
+        var title = "${participations[0].competitor.name} vs ${participations[1].competitor.name}"
+        if (participations.size > 2){
+            title += " and ${participations.size - 2} more..."
+        }
+        return title
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private  fun getNotificationBigText(date: LocalDateTime, city: City, sport: Sport, participations: MutableList<Participation>): String{
+        var retVal: String = "${formatDate(date)} | ${city.name}, ${city.country}\n" +
+                "${sport.name} / ${sport.sex.capitalize()}\n" +
+                "Participations: \n"
+        var i = 1
+        for (participation in participations){
+            retVal += "${i}. ${participation.competitor.name}\n"
+            i++
+        }
+
+
+        return retVal
+    }
+
+    private fun getGreekDay(day: String):String{
+        when (day) {
+            "MONDAY" -> return "Δευτέρα"
+            "TUESDAY" -> return "Τρίτη"
+            "WEDNESDAY" -> return "Τετάρτη"
+            "THURSDAY" -> return "Πέμπτη"
+            "FRIDAY" -> return "Παρασκευή"
+            "SATURDAY" -> return "Σάββατο"
+        }
+        return "Κυριακή"
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun formatDate(date: LocalDateTime):String{
+        var day = getGreekDay(date.dayOfWeek.toString())
+        var formatter = DateTimeFormatter.ofPattern("dd/MM - HH:mm")
+        var calendarDate = date.format(formatter)
+        return day + " " + calendarDate
+    }
+
 }
