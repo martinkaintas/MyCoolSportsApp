@@ -11,6 +11,8 @@ interface SportDao {
     @Query("SELECT * FROM sport WHERE id == (:id)")
     fun get(id:Long): Sport
 
+    @Query("SELECT * FROM sport WHERE name == (:name) LIMIT 1")
+    fun getByName(name:String): Sport
 
     @Query("SELECT * FROM sport WHERE id IN (:sportIds)")
     fun loadAllByIds(sportIds: IntArray): List<Sport>

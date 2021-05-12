@@ -23,6 +23,12 @@
         <action
             android:id="@+id/action_sportListFragment_to_sportEditFragment"
             app:destination="@id/sportEditFragment" />
+        <action
+            android:id="@+id/action_matchListFragment_to_MatchAdminViewFragment"
+            app:destination="@id/MatchAdminViewFragment" />
+        <action
+            android:id="@+id/action_matchListFragment_to_matchEditFragment"
+            app:destination="@id/MatchEditFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +45,31 @@
         android:id="@+id/sportListFragment"
         android:name="com.tripple_d.mycoolsportsapp.ui.data.sports.SportsFragment"
         android:label="SportListFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/MatchEditFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.matches.MatchEditFragment"
+        android:label="MatchEditFragment">
+
+        <action
+            android:id="@+id/action_matchEditFragment_to_dataFragment"
+            app:destination="@id/dataFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MatchAdminViewFragment"
+        android:name="com.tripple_d.mycoolsportsapp.ui.data.matches.MatchInfoFragment"
+        android:label="MatchInfoFragment">
+
+        <action
+            android:id="@+id/action_MatchInfoFragment_to_dataFragment"
+            app:destination="@id/dataFragment" />
+
+
+        <action
+            android:id="@+id/action_MatchInfoFragment_to_MatchEditFragment"
+            app:destination="@id/MatchEditFragment" />
     </fragment>
 
     <fragment

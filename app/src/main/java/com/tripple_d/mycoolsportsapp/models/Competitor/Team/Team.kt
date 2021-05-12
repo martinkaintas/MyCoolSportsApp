@@ -17,4 +17,4 @@ data class Team (
     @ColumnInfo(name = "name") override var name: String,
     @ColumnInfo(name = "field_name") val field_name: String,
     @ColumnInfo(name = "creation_year") val creation_year: Int,
-    ): Competitor(id,name,city_id,sport_id),Parcelable
+): Competitor(id,name,city_id,sport_id),Parcelable

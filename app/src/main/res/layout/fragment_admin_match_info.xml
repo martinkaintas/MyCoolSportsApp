@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_match_details"
+    style="@style/wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.match_details.ParticipantFragment">
+
+    <TextView
+        android:id="@+id/tvSportNameLabel"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__result"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchSport" />
+
+    <TextView
+        android:id="@+id/tvmatchDetailsDateTitle"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvParticipant"
+        tools:text="@string/matchDetails__date" />
+
+    <ImageView
+        android:id="@+id/ivMatchSport"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:contentDescription="@string/matchDetails__sport"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMatchSport"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvMatchSport"
+        app:srcCompat="@drawable/ic_baseline_sports_basketball_24_cyan" />
+
+    <TextView
+        android:id="@+id/tvMatchSportTitle"
+        style="@style/matchDetails__title__land"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__sport"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvParticipant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportNameLabel" />
+
+    <TextView
+        android:id="@+id/tvMatchSport"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/matchDetails__sport"
+        app:layout_constraintStart_toEndOf="@+id/ivMatchSport"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchSportTitle" />
+
+    <TextView
+        android:id="@+id/tvMatchDetailsPlaceTitle"
+        style="@style/matchDetails__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchDetailsDate"
+        tools:text="@string/matchDetails__place" />
+
+    <ImageView
+        android:id="@+id/ivMatchDetailsPlaceIcon"
+        android:layout_width="24dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/matchDetails__date"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMatchDetailsPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvMatchDetailsPlace"
+        app:srcCompat="@drawable/ic_baseline_location_city_24_cyan" />
+
+    <TextView
+        android:id="@+id/tvMatchDetailsPlace"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:text="@string/matchDetails__place"
+        app:layout_constraintStart_toEndOf="@+id/ivMatchDetailsPlaceIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchDetailsPlaceTitle"
+        tools:text="@string/matchDetails__place" />
+
+    <TextView
+        android:id="@+id/tvMatchDetailsDate"
+        style="@style/matchDetails__text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/matchDetails__date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvmatchDetailsDateTitle" />
+
+    <Button
+        android:id="@+id/btEditMatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Επεξεργασια"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchDetailsPlace" />
+
+    <Button
+        android:id="@+id/btDeleteMatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Διαγραφη"
+        app:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchDetailsPlace" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
