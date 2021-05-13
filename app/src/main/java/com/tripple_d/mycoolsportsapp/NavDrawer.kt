@@ -53,13 +53,8 @@ class NavDrawer : AppCompatActivity() {
         createNotificationChannel()
 
         room_db = Room.databaseBuilder(applicationContext, CoolDatabase::class.java, "cool-db").allowMainThreadQueries().build()
+        this.deleteDatabase("cool-db")
 
-        if(room_db.sportDao().getAll().isEmpty()){
-            room_db.sportDao().insertAll(
-                Sport(0, "NBA", "team", "male", 2),
-                Sport(0, "Tennis", "single", "female", 2)
-            )
-        }
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
                 City(0, "Thessaloniki", "Greece", 69.0, 69.0),
@@ -67,44 +62,6 @@ class NavDrawer : AppCompatActivity() {
             )
         }
 
-        if(room_db.teamDao().getAll().isEmpty()){
-            room_db.teamDao().insertAll(
-                Team(
-                    0,
-                    1,
-                    1, "PAOKARA", "KAFKATZOGLEO", 1969
-                ),
-                Team(
-                    0,
-                    2,
-                    1, "Ethniki TEI", "TEI", 1969
-                )
-            )
-        }
-        if(room_db.athleteDao().getAll().isEmpty()){
-            room_db.athleteDao().insertAll(
-                Athlete(
-                    0, "Pipis", "Pipou",
-                    1,
-                    2, 1969
-                ),
-                Athlete(
-                    0, "Sifis", "SIfou",
-                    1,
-                    2, 1969
-                ),
-                Athlete(
-                    0, "Pipa", "Pipou",
-                    1,
-                    2, 1942
-                ),
-                Athlete(
-                    0, "Sofoklia", "SIfou",
-                    2,
-                    2, 1945
-                ),
-            )
-        }
 
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)
