@@ -6,15 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp">
 
-    <TextView
-        android:id="@+id/tvAthleteLabel"
-        style="@style/matchDetails__title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ονομα"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvAthleteLabel"
+                style="@style/matchDetails__title__land"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ονομα"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/etAthleteName"
@@ -137,5 +148,11 @@
         app:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spAthleteYear" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

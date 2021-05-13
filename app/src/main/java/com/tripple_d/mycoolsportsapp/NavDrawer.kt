@@ -53,7 +53,6 @@ class NavDrawer : AppCompatActivity() {
         createNotificationChannel()
 
         room_db = Room.databaseBuilder(applicationContext, CoolDatabase::class.java, "cool-db").allowMainThreadQueries().build()
-        this.deleteDatabase("cool-db")
 
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
