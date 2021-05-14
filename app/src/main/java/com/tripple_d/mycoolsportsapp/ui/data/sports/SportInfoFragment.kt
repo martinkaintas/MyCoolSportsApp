@@ -56,6 +56,10 @@ class SportInfoFragment : Fragment() {
 
     private fun deleteSport(sportView: View, sport: Sport) {
         mainActivity.room_db.sportDao().delete(sport)
+
+        mainActivity.room_db.teamDao().deleteBySport(sport.id)
+        mainActivity.room_db.athleteDao().deleteBySport(sport.id)
+
         val successMessage = "Το άθλημα διαγράφηκε επιτυχώς!"
         val duration = Toast.LENGTH_SHORT
         val toast = Toast.makeText(activity, successMessage, duration)

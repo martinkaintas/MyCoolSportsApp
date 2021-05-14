@@ -26,6 +26,9 @@ interface AthleteDao {
     @Query("SELECT * FROM athlete WHERE first_name LIKE :name")
     fun findByName(name: String): Athlete
 
+    @Query("DELETE FROM athlete WHERE sport_id==:sport_id")
+    fun deleteBySport(sport_id: Long)
+
     @Insert
     fun insertAll(vararg athletes: Athlete)
 

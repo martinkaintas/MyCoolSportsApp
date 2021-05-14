@@ -22,6 +22,9 @@ interface TeamDao {
     @Query("SELECT * FROM team WHERE name LIKE :name")
     fun findByName(name: String): Team
 
+    @Query("DELETE FROM team WHERE sport_id==:sport_id")
+    fun deleteBySport(sport_id: Long)
+
     @Insert
     fun insertAll(vararg teams: Team)
 
