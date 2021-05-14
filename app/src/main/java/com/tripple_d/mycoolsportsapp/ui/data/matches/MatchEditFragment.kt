@@ -193,7 +193,7 @@ class MatchEditFragment : Fragment() {
 
         //Date
         val dPicker = matchView?.findViewById<DatePicker>(R.id.dpMatchDate)
-        val date = Timestamp.valueOf("${dPicker.year}-${dPicker.month}-${dPicker.dayOfMonth} 21:00:00")
+        val date = Timestamp.valueOf("${dPicker.year}-${dPicker.month+1}-${dPicker.dayOfMonth} 21:00:00")
 
         //participations
         val participations = arrayListOf(hashMapOf<String, Any?>())
