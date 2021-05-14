@@ -176,6 +176,15 @@ class MatchEditFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onSubmit() {
 
+        if(matchView?.findViewById<Spinner>(R.id.spAdminSport).selectedItem==null ||
+            matchView?.findViewById<Spinner>(R.id.spAdminPlace).selectedItem==null ||
+            participantAdapter.dataParticipants.size==0)
+        {
+            Toast.makeText(this.context,"Παρακαλώ συμπληρώστε όλα τα πεδία!",Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
 
         //Sport
         val sportSpinner = matchView?.findViewById<Spinner>(R.id.spAdminSport)
@@ -183,7 +192,7 @@ class MatchEditFragment : Fragment() {
 
 
         if(participantAdapter.dataParticipants.size<sport.total_competitors){
-            Toast.makeText(this.context,"Υπάρχει κάποιο πρόβλημα. Ελέγξτε τα στοιχεία.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.context,"Πρέπει να επιλεχθούν ${sport.total_competitors} διαγωνιζόμενοι!",Toast.LENGTH_SHORT).show()
             return
         }
 
