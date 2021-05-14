@@ -83,6 +83,11 @@
         <action
             android:id="@+id/action_matchEditFragment_to_dataFragment"
             app:destination="@id/dataFragment" />
+
+
+        <action
+            android:id="@+id/action_matchEditFragment_to_matchInfoFragment"
+            app:destination="@id/MatchAdminViewFragment" />
     </fragment>
 
     <fragment

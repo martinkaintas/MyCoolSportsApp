@@ -1,28 +1,21 @@
 package com.tripple_d.mycoolsportsapp.ui.data.matches
 
 import android.content.Context
-import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.model.LatLng
 import com.tripple_d.mycoolsportsapp.NavDrawer
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match.Match
-import com.tripple_d.mycoolsportsapp.ui.map.MapsActivity
 import com.tripple_d.mycoolsportsapp.ui.match_details.ParticipantAdapter
-import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -52,7 +45,7 @@ class MatchInfoFragment : Fragment() {
             bundle.putParcelable("match", match)
             Navigation.findNavController(root).navigate(R.id.action_MatchInfoFragment_to_MatchEditFragment, bundle)
         }
-        root.findViewById<TextView>(R.id.btDeleteMatch).setOnClickListener{
+        root.findViewById<TextView>(R.id.btMatchCancel).setOnClickListener{
         mainActivity.firebase_db.collection("Matches")
             .get()
             .addOnSuccessListener { result ->

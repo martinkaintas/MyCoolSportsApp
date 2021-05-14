@@ -49,7 +49,7 @@ class MatchEditFragment : Fragment() {
         match = arguments?.getParcelable<Match>("match")
 
         setFormOptions()
-            matchView?.findViewById<Button>(R.id.btCancelSport)
+            matchView?.findViewById<Button>(R.id.btMatchCancel)
                 ?.setOnClickListener { goBack() }
             matchView?.findViewById<Button>(R.id.btEditMatch)
                 ?.setOnClickListener { onSubmit() }
@@ -306,7 +306,13 @@ class MatchEditFragment : Fragment() {
     }
 
     private fun goBack() {
-        matchView.findNavController()
-            .navigate(R.id.action_matchEditFragment_to_dataFragment, null)
+        if(match!=null) {
+            val bundle = Bundle()
+            bundle.putParcelable("match", match)
+            matchView.findNavController().navigate(R.id.action_matchEditFragment_to_matchInfoFragment,bundle )
+        }
+        else matchView.findNavController()
+                .navigate(R.id.action_matchEditFragment_to_dataFragment, null)
+
     }
 }
