@@ -28,8 +28,10 @@ class ParticipantAdapter(private val dataSet: List<Participation>):
     // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
-        if(position >= 2){ return }
-        else if( itemCount > 2 && position == 1 ){
+        if(position >= 2){
+            holder.itemView.findViewById<TextView>(R.id.participant).visibility = View.GONE
+            holder.itemView.findViewById<TextView>(R.id.score).visibility = View.GONE
+        } else if( itemCount > 2 && position == 1 ){
             holder.itemView.findViewById<TextView>(R.id.participant).text= "... and " + (itemCount - 1) + " more."
             holder.itemView.findViewById<TextView>(R.id.score).text= ""
         }else {
