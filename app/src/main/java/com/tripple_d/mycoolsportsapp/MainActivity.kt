@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -25,10 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.tripple_d.mycoolsportsapp.models.*
 import com.tripple_d.mycoolsportsapp.models.City.City
 import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
-import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
 import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.models.Match.Participation
-import com.tripple_d.mycoolsportsapp.models.Participant.Athlete.Athlete
+import java.lang.Exception
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +36,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 
 
-class NavDrawer : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     var firebase_db:FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -72,11 +72,6 @@ class NavDrawer : AppCompatActivity() {
 
 
 
-//        val fab: FloatingActionButton = findViewById(R.id.fab)
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -128,52 +123,59 @@ class NavDrawer : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (match in result) {
-                    val sport = room_db.sportDao().get(match.data["sport_id"] as Long)
-                    val participations : MutableList<Participation> = mutableListOf<Participation>()
-                    val city = room_db.cityDao().get(match.data["city"] as Long)
-                    for (participation in match.get("participants") as ArrayList<HashMap<String, String>>){
-                        val competitor: Competitor = if(sport.type=="team")
-                                room_db.teamDao().get(participation["id"] as Long)
-                        else
-                            room_db.athleteDao().get(participation["id"] as Long)
+                        try {
+                            val sport = room_db.sportDao().get(match.data["sport_id"] as Long)
+                            val participations: MutableList<Participation> =
+                                mutableListOf<Participation>()
+                            val city = room_db.cityDao().get(match.data["city"] as Long)
+                            for (participation in match.get("participants") as ArrayList<HashMap<String, String>>) {
+                                val competitor: Competitor = if (sport.type == "team")
+                                    room_db.teamDao().get(participation["id"] as Long)
+                                else
+                                    room_db.athleteDao().get(participation["id"] as Long)
 
-                        participations.add(Participation(participation["score"] as Long, competitor))
+                                participations.add(Participation(participation["score"] as Long,
+                                    competitor))
+                            }
+
+                            val date = LocalDateTime.ofInstant(
+                                Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds),
+                                TimeZone.getDefault().toZoneId())
+                            val matchObj = Match(
+                                match.getLong("id"),
+                                date,
+                                city,
+                                sport,
+                                participations
+                            )
+                            // if match is today
+                            if (LocalDateTime.now().until(date, ChronoUnit.DAYS)
+                                    .compareTo(0) == 0 && date.isAfter(LocalDateTime.now())
+                            ) {
+                                showMatchNotification(matchObj,
+                                    "${getNotificationTitle(participations)}",
+                                    formatDate(date),
+                                    getNotificationBigText(date, city, sport, participations))
+                            }
+                            matches.add(
+                                matchObj
+                            )
+                        }
+                        catch(e:Exception) {
+                                Toast.makeText(applicationContext,"Οι βάσεις είναι ασυγχρόνιστες. Διαγραφή ασυγχρόνιστων αγώνων.",Toast.LENGTH_SHORT)
+                                    .show()
+                                firebase_db.collection("Matches").document(match.id).delete()
+                        }
+                        if (callback != null) {
+                            callback(matches)
+                        }
                     }
-
-                    val date = LocalDateTime.ofInstant(
-                        Instant.ofEpochSecond((match.data["date"] as com.google.firebase.Timestamp).seconds),
-                        TimeZone.getDefault().toZoneId())
-                    val matchObj = Match(
-                        match.getLong("id"),
-                        date,
-                        city,
-                        sport,
-                        participations
-                    )
-                    // if match is today
-                    if (LocalDateTime.now().until(date, ChronoUnit.DAYS)
-                            .compareTo(0) == 0 && date.isAfter(LocalDateTime.now())
-                    ) {
-                        showMatchNotification(matchObj,
-                            "${getNotificationTitle(participations)}",
-                            formatDate(date),
-                            getNotificationBigText(date, city, sport, participations))
-                    }
-                    matches.add(
-                        matchObj
-                    )
                 }
-
-
-                if (callback != null) {
-                    callback(matches)
-                }
-            }
-    }
+        }
 
     private fun showMatchNotification(match: Match, title: String = "Title", text: String = "Text", bigText: String = "Big Text") {
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(this, NavDrawer::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val args = Bundle()

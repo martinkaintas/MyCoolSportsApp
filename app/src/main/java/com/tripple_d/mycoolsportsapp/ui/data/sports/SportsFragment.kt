@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 
 class SportsFragment : Fragment() {
 
     private lateinit var dataViewModel: SportViewModel
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +27,7 @@ class SportsFragment : Fragment() {
         val sportsView = inflater.inflate(R.layout.fragment_sports, container, false)
         val recyclerView = sportsView.findViewById<RecyclerView>(R.id.rvSports)
 
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
         val sports = mainActivity.room_db.sportDao().getAll().toMutableList()
         recyclerView.apply {
             adapter = SportListAdapter(sports)

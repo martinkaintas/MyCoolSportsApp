@@ -11,11 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match.Match
-import com.tripple_d.mycoolsportsapp.ui.data.sports.SportListAdapter
-import java.time.format.DateTimeFormatter
 
 class MatchesFragment : Fragment() {
 
@@ -29,7 +27,7 @@ class MatchesFragment : Fragment() {
     ): View? {
         dataViewModel =
             ViewModelProvider(this).get(MatchViewModel::class.java)
-        val mainActivity = activity as NavDrawer
+        val mainActivity = activity as MainActivity
 
         val root = inflater.inflate(R.layout.fragment_matches, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.rvMatches)

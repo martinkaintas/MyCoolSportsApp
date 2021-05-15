@@ -3,7 +3,6 @@ package com.tripple_d.mycoolsportsapp.ui.data.matches
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.provider.Telephony
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,21 +12,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.tripple_d.mycoolsportsapp.MultiSelectSpinner
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.City.City
 import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
 import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.models.Match.Participation
 import com.tripple_d.mycoolsportsapp.models.Sport
-import kotlinx.android.synthetic.main.match_participant_item.*
 import java.sql.Timestamp
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
 class MatchEditFragment : Fragment() {
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
     private lateinit var competitors: MutableList<Competitor>
     private lateinit var chosenCompetitors: MutableList<Competitor>
     private var match: Match? = null
@@ -44,7 +42,7 @@ class MatchEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
         matchView = inflater.inflate(R.layout.fragment_admin_match_edit, container, false)
         match = arguments?.getParcelable<Match>("match")
 

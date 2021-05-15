@@ -54,7 +54,7 @@
             android:name=".ui.map.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".NavDrawer"
+            android:name=".MainActivity"
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/Theme.MyCoolSportsApp.NoActionBar">
             <intent-filter>

@@ -1,9 +1,5 @@
 package com.tripple_d.mycoolsportsapp.ui.home
 
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
-import android.content.Intent.getIntent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -11,32 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.model.LatLng
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
-import com.tripple_d.mycoolsportsapp.models.City.City
-import com.tripple_d.mycoolsportsapp.models.Competitor.Competitor
 import com.tripple_d.mycoolsportsapp.models.Match.Match
-import com.tripple_d.mycoolsportsapp.models.Match.Participation
-import com.tripple_d.mycoolsportsapp.models.Sport
 import com.tripple_d.mycoolsportsapp.ui.match_details.MatchDetailsFragment
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.*
 
 class HomeFragment : Fragment(),IItemClickListener {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
     private lateinit var matches: MutableList<Match>
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -57,11 +42,11 @@ class HomeFragment : Fragment(),IItemClickListener {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
 
         val bundle = activity?.intent?.getParcelableExtra<Bundle>("bundle")
         val match: Match? = bundle?.getParcelable("match")
-        (activity as NavDrawer).intent.removeExtra("bundle")
+        (activity as MainActivity).intent.removeExtra("bundle")
         if (match != null) {
             onItemClicked(match)
         }

@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.City.City
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
@@ -18,13 +18,13 @@ import com.whiteelephant.monthpicker.MonthPickerDialog
 import java.util.*
 
 class TeamEditFragment : Fragment() {
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
 
 
         val teamView = inflater.inflate(R.layout.fragment_team_edit, container, false)

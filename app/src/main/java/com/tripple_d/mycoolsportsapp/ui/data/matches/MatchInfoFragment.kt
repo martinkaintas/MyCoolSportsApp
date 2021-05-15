@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 import com.tripple_d.mycoolsportsapp.models.Match.Match
 import com.tripple_d.mycoolsportsapp.ui.match_details.ParticipantAdapter
@@ -33,7 +33,7 @@ class MatchInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val match: Match = arguments?.getParcelable<Match>("match") as Match
-        val mainActivity = activity as NavDrawer
+        val mainActivity = activity as MainActivity
 
         val root = inflater.inflate(R.layout.fragment_admin_match_info, container, false)
         root.findViewById<TextView>(R.id.tvMatchSport).text = match.sport.name

@@ -9,13 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.R
 
 class AthletesFragment : Fragment() {
 
     private lateinit var dataViewModel: AthleteViewModel
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,7 @@ class AthletesFragment : Fragment() {
         athletesView?.findViewById<FloatingActionButton>(R.id.fabAddAthlete)
             ?.setOnClickListener { navigateToAddAthlete(athletesView) }
         
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
         val athletes = mainActivity.room_db.athleteDao().getAll().toMutableList()
         recyclerView.apply {
             adapter = AthleteListAdapter(athletes)

@@ -9,19 +9,19 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
-import com.tripple_d.mycoolsportsapp.NavDrawer
+import com.tripple_d.mycoolsportsapp.MainActivity
 import com.tripple_d.mycoolsportsapp.models.Competitor.Team.Team
 import com.tripple_d.mycoolsportsapp.R
 
 class TeamInfoFragment(): Fragment() {
 
-    private lateinit var mainActivity: NavDrawer
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mainActivity = activity as NavDrawer
+        mainActivity = activity as MainActivity
         val team: Team = arguments?.getParcelable<Team>("team") as Team
         val teamView = inflater.inflate(R.layout.fragment_team_info, container, false)
 
