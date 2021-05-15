@@ -56,8 +56,17 @@ class NavDrawer : AppCompatActivity() {
 
         if(room_db.cityDao().getAll().isEmpty()){
             room_db.cityDao().insertAll(
-                City(0, "Thessaloniki", "Greece", 69.0, 69.0),
-                City(0, "El Basan", "Yes", 99.0, 99.0),
+                City(0, "Thessaloniki", "Greece",40.629269,22.947412),
+                City(0, "Athens", "Greece",37.9838,23.7275),
+                City(0, "Rome", "Italy",41.54, 12.30),
+                City(0, "Madrid", "Spain",40.23,3.43),
+                City(0, "Berlin", "Germany", 52.31,13.23),
+                City(0, "Elbasan", "Albania", 41.1102, 41.1102),
+                City(0, "Miami", "Florida",25.7617 ,80.1918),
+                City(0, "Los Angeles", "California", 34.0522,118.2437 ),
+                City(0, "Paris", "France", 48.8566, 2.3522),
+                City(0, "London", "England", 51.5074, 0.1278),
+                City(0, "Amsterdam", "Netherlands", 52.22, 4.53),
             )
         }
 
@@ -194,7 +203,7 @@ class NavDrawer : AppCompatActivity() {
     private  fun getNotificationTitle(participations: MutableList<Participation>):String{
         var title = "${participations[0].competitor.name} vs ${participations[1].competitor.name}"
         if (participations.size > 2){
-            title += " and ${participations.size - 2} more..."
+            title += " και ${participations.size - 2} ακόμη..."
         }
         return title
     }
@@ -203,7 +212,7 @@ class NavDrawer : AppCompatActivity() {
     private  fun getNotificationBigText(date: LocalDateTime, city: City, sport: Sport, participations: MutableList<Participation>): String{
         var retVal: String = "${formatDate(date)} | ${city.name}, ${city.country}\n" +
                 "${sport.name} / ${sport.sex.capitalize()}\n" +
-                "Participations: \n"
+                "Συμμετοχές: \n"
         var i = 1
         for (participation in participations){
             retVal += "${i}. ${participation.competitor.name}\n"

@@ -32,7 +32,7 @@ class ParticipantAdapter(private val dataSet: List<Participation>):
             holder.itemView.findViewById<TextView>(R.id.participant).visibility = View.GONE
             holder.itemView.findViewById<TextView>(R.id.score).visibility = View.GONE
         } else if( itemCount > 2 && position == 1 ){
-            holder.itemView.findViewById<TextView>(R.id.participant).text= "... and " + (itemCount - 1) + " more."
+            holder.itemView.findViewById<TextView>(R.id.participant).text= "... και " + (itemCount - 1) + " ακόμη."
             holder.itemView.findViewById<TextView>(R.id.score).text= ""
         }else {
             holder.itemView.findViewById<TextView>(R.id.participant).text=dataSet[position].competitor.name

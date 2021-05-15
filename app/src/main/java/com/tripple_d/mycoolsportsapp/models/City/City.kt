@@ -14,8 +14,8 @@ data class City(
     @PrimaryKey(autoGenerate = true) val id:Long,
     @ColumnInfo(name = "name") val name:String,
     @ColumnInfo(name = "country") val country:String,
-    @ColumnInfo(name = "lng") val lng:Double,
     @ColumnInfo(name = "lat") val lat:Double,
+    @ColumnInfo(name = "lng") val lng:Double,
 ):Parcelable {
     override fun toString(): String = name
 }

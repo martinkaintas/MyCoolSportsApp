@@ -39,8 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val bundle = intent.getParcelableExtra<Bundle>("bundle")
         val location: LatLng? = bundle!!.getParcelable("latLng")
 
-        mMap.addMarker(location?.let { MarkerOptions().position(it).title("Match Location") })
-        mMap.moveCamera(location?.let { CameraUpdateFactory.newLatLng(it)})
-
+        mMap.addMarker(location?.let { MarkerOptions().position(it).title("Τοποθεσία αγώνα") })
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
     }
 }

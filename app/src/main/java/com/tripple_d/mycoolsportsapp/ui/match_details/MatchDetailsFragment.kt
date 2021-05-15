@@ -55,7 +55,7 @@ class MatchDetailsFragment(): Fragment() {
 
         var showMapBtn: Button = root.findViewById<Button>(R.id.btnMatchDetailsPlaceButton)
         showMapBtn.setOnClickListener {
-            showMap(match.city.name + "  " + match.city.country)
+            showMap(LatLng(match.city.lat, match.city.lng))
         }
 
         match.sport.name?.let { changeImage(it.toLowerCase(), root) }
@@ -85,34 +85,16 @@ class MatchDetailsFragment(): Fragment() {
         else  img.setImageDrawable(sportsIcon)
     }
 
-    fun showMap(location: String){
+    private fun showMap(location: LatLng){
+        if (location.equals(null)){
+            Toast.makeText(activity, "Δεν βρέθηκαν δεδομένα τοποθεσίας", Toast.LENGTH_SHORT).show()
+            return
+        }
         val intent = Intent(activity, MapsActivity::class.java)
-        var latLng = getLatLongFromLocation(location)
         val args = Bundle()
-        args.putParcelable("latLng", latLng)
+        args.putParcelable("latLng", location)
         intent.putExtra("bundle", args)
         startActivity(intent)
-    }
-
-    private fun getLatLongFromLocation(location: String): LatLng {
-        if (Geocoder.isPresent()) {
-            Toast.makeText(activity, "Waiting for LatLng data...", Toast.LENGTH_SHORT).show()
-            try {
-                val gc = Geocoder(activity)
-                val addresses: List<Address> = gc.getFromLocationName(location, 5)
-                for (a in addresses) {
-                    if (a.hasLatitude() && a.hasLongitude()) {
-                        Toast.makeText(activity, "Location found.", Toast.LENGTH_SHORT).show()
-                        return (LatLng(a.latitude, a.longitude))
-                    }
-                }
-            } catch (e: IOException) {
-                // handle the exception
-                Toast.makeText(activity, "Location was not found.", Toast.LENGTH_SHORT).show()
-                return (LatLng(39.0742 ,21.8243))
-            }
-        }
-        return (LatLng(39.00,47.00))
     }
 
     private fun getGreekDay(day: String):String{
@@ -136,3 +118,23 @@ class MatchDetailsFragment(): Fragment() {
     }
 }
 
+//    private fun getLatLongFromLocation(location: String): LatLng {
+//        if (Geocoder.isPresent()) {
+//            Toast.makeText(activity, "Waiting for LatLng data...", Toast.LENGTH_SHORT).show()
+//            try {
+//                val gc = Geocoder(activity)
+//                val addresses: List<Address> = gc.getFromLocationName(location, 5)
+//                for (a in addresses) {
+//                    if (a.hasLatitude() && a.hasLongitude()) {
+//                        Toast.makeText(activity, "Location found.", Toast.LENGTH_SHORT).show()
+//                        return (LatLng(a.latitude, a.longitude))
+//                    }
+//                }
+//            } catch (e: IOException) {
+//                // handle the exception
+//                Toast.makeText(activity, "Location was not found.", Toast.LENGTH_SHORT).show()
+//                return (LatLng(39.0742 ,21.8243))
+//            }
+//        }
+//        return (LatLng(39.00,47.00))
+//    }
