@@ -62,7 +62,7 @@ class NavDrawer : AppCompatActivity() {
                 City(0, "Madrid", "Spain",40.23,3.43),
                 City(0, "Berlin", "Germany", 52.31,13.23),
                 City(0, "Elbasan", "Albania", 41.1102, 41.1102),
-                City(0, "Miami", "Florida",25.7617 ,80.1918),
+                City(0, "Miami", "Florida",25.7617 ,-80.1918),
                 City(0, "Los Angeles", "California", 34.0522,118.2437 ),
                 City(0, "Paris", "France", 48.8566, 2.3522),
                 City(0, "London", "England", 51.5074, 0.1278),
